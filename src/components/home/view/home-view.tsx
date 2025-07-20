@@ -4,9 +4,16 @@ import { HomeHero } from "@/components/home/home-hero";
 import { HomeFeatured } from "@/components/home/home-featured";
 import { HomeCategories } from "@/components/home/home-categories";
 import { Footer } from "@/components/footer";
+import TargetCursor from "@/components/ui/target-cursor";
+
 export function HomeView() {
   return (
     <div className="min-h-screen relative overflow-hidden">
+      <TargetCursor 
+        spinDuration={2}
+        hideDefaultCursor={true}
+      />
+      
       <div className="absolute inset-0 z-0">
         <DarkVeil
           hueShift={290}

@@ -14,7 +14,7 @@ export function HomeCategories() {
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {categories.map((category, index) => (
-            <div key={index} className="group cursor-pointer">
+            <div key={index} className="group cursor-pointer cursor-target">
               <div className="bg-black/30 backdrop-blur-sm border-2 border-purple-500/50 p-6 text-center transition-all hover:border-purple-400 hover:bg-purple-600/20">
                 <div className="text-3xl mb-3">{category.icon}</div>
                 <h4 className="font-bold text-purple-100">{category.name}</h4>
