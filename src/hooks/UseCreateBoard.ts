@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
-import { createBoard } from "@/server/product";
+import { createBoard } from "../service/product";
 
-export const useCreateBlog = () => {
+export const UseCreateBoard = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -30,11 +30,11 @@ export const useCreateBlog = () => {
         author,
       }),
     onSuccess: () => {
-      toast.success("Blog created successfully!");
-      queryClient.invalidateQueries({ queryKey: ["Blogs"] });
+      toast.success("cardboards created successfully!");
+      queryClient.invalidateQueries({ queryKey: ["Cardboards"] });
     },
     onError: (error: any) => {
-      toast.error("Failed to create blog: " + error.message);
+      toast.error("Failed to create cardboards: " + error.message);
     },
   });
 

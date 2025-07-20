@@ -15,7 +15,7 @@ export const createBoard = async ({
   category: string;
   author: string;
 }) => {
-  const response = await instance.post("/api/blogs", {
+  const response = await instance.post("/api/cardboards", {
     name,
     description,
     price,
@@ -25,7 +25,16 @@ export const createBoard = async ({
   });
 
   if (!response) {
-    throw new Error("Failed to create blog");
+    throw new Error("Failed to create cardboards");
+  }
+
+  return response.data;
+};
+
+export const GetBoard = async () => {
+  const response = await instance.get("/api/cardboards");
+  if (!response) {
+    throw new Error("failed to create blog");
   }
 
   return response.data;
