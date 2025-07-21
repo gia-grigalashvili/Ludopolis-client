@@ -39,3 +39,22 @@ export const GetBoard = async () => {
 
   return response.data;
 };
+
+export const GetSingleBoard = async (id: string | number) => {
+  const response = await instance.get(`/api/cardboards/${id}`);
+  console.log("PRgia:", response.data);
+  if (!response) {
+    throw new Error("Failed to fetch the cardboards");
+  }
+  return response.data;
+};
+
+export const deleteBoard = async (Id: number) => {
+  const response = await instance.delete(`/api/cardboards/${Id}`);
+
+  if (!response) {
+    throw new Error("Failed to delete blog");
+  }
+
+  return response.data;
+};

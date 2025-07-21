@@ -10,7 +10,7 @@ import { MdDelete, MdOutlineSystemUpdateAlt } from "react-icons/md";
 import type { ColumnDef } from "@tanstack/react-table";
 import { UseGetBoard } from "../../hooks/UseGetBoard";
 import toast from "react-hot-toast";
-
+import { useNavigate } from "@tanstack/react-router";
 type Board = {
   _id: string;
   name: string;
@@ -25,7 +25,7 @@ type Board = {
 export default function AllBoard() {
   const [search, setSearch] = useState("");
   const { data, isLoading, isError } = UseGetBoard();
-
+  const navigate = useNavigate();
   const rawData = data?.data ?? [];
 
   const filteredData = useMemo(() => {
@@ -158,6 +158,9 @@ export default function AllBoard() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2, delay: index * 0.05 }}
                     className="hover:bg-[#34344a] transition"
+                    onClick={() =>
+                      navigate({ to: `/product/${row.original._id}` })
+                    }
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td
