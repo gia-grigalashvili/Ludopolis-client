@@ -1,12 +1,19 @@
-export function RegisterForm() {
+export function RegisterForm({
+  onSubmit, 
+  isPending,
+}: {
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  isPending: boolean;
+}) {
   return (
-    <form className="space-y-6">
+    <form className="space-y-6" onSubmit={onSubmit}>
       <div>
         <label className="block text-sm font-bold mb-2 text-purple-200">
           NAME
         </label>
         <input
           type="text"
+          name="name"
           className="cursor-target w-full px-4 py-3 border border-purple-400 rounded focus:outline-none focus:border-purple-300 transition-all bg-black/30 text-white placeholder-purple-300"
           placeholder="Enter your full name"
         />
@@ -18,6 +25,7 @@ export function RegisterForm() {
         </label>
         <input
           type="email"
+          name="email"
           className="cursor-target w-full px-4 py-3 border border-purple-400 rounded focus:outline-none focus:border-purple-300 transition-all bg-black/30 text-white placeholder-purple-300"
           placeholder="Enter your email"
         />
@@ -29,6 +37,7 @@ export function RegisterForm() {
         </label>
         <input
           type="password"
+          name="password"
           className="cursor-target w-full px-4 py-3 border border-purple-400 rounded focus:outline-none focus:border-purple-300 transition-all bg-black/30 text-white placeholder-purple-300"
           placeholder="Create a password"
         />
@@ -63,8 +72,9 @@ export function RegisterForm() {
       <button
         type="submit"
         className="cursor-target w-full py-3 bg-purple-600 hover:bg-purple-700 border-2 border-white font-bold text-lg rounded transition-all transform hover:scale-105 text-white"
+        disabled={isPending}
       >
-        CREATE ACCOUNT
+        {isPending ? "CREATING ACCOUNT..." : "CREATE ACCOUNT"}
       </button>
 
       <div className="flex items-center my-6">

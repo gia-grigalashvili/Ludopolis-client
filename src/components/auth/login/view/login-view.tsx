@@ -2,8 +2,18 @@ import { Link } from "@tanstack/react-router";
 import { LoginForm } from "../login-form";
 import TargetCursor from "@/components/ui/target-cursor";
 import DarkVeil from "@/components/ui/dark-veil";
+import { useLogin } from "@/hooks/useLogin";
 
 export function LoginView() {
+  const { mutate: login, isPending } = useLogin();
+
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    login({ email, password });
+  };
   return (
     <div className="min-h-screen relative overflow-hidden">
       <TargetCursor spinDuration={2} hideDefaultCursor={true} />
@@ -35,7 +45,7 @@ export function LoginView() {
               SIGN IN
             </h2>
 
-            <LoginForm />
+            <LoginForm onSubmit={handleLogin} isPending={isPending} />
 
             <div className="text-center mt-6">
               <p className="text-sm text-purple-300">
