@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import { Toaster } from "react-hot-toast";
 import { routeTree } from "./routeTree.gen";
 
 import "./styles.css";
@@ -20,7 +20,6 @@ const router = createRouter({
   defaultPreloadStaleTime: 0,
 });
 
-// Register the router instance for type safety
 declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
@@ -34,6 +33,7 @@ if (rootElement && !rootElement.innerHTML) {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
+        <Toaster />
       </QueryClientProvider>
     </StrictMode>
   );

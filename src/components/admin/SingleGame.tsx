@@ -5,6 +5,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { UseDeleteBoard } from "../../hooks/UseDeleteBoard";
 export default function SingleGame({
   Board,
+  onUpdated,
 }: {
   Board: any;
   onUpdated?: () => void;
@@ -17,7 +18,7 @@ export default function SingleGame({
     mutate(Board.data._id, {
       onSuccess: () => {
         setIsModalDelete(false);
-        // if (onUpdated) onUpdated();
+        if (onUpdated) onUpdated();
       },
     });
   };
@@ -26,7 +27,15 @@ export default function SingleGame({
     <div>
       <div className="max-w-3xl mx-auto p-6 bg-[#1f1f2b] text-white rounded-xl shadow-lg relative">
         <div className="absolute top-4 right-4 flex gap-2">
-          <button className="p-2 rounded-full bg-yellow-500/10 hover:bg-yellow-600/20 text-yellow-400 hover:text-yellow-500">
+          <button
+            className="p-2 rounded-full bg-yellow-500/10 hover:bg-yellow-600/20 text-yellow-400 hover:text-yellow-500"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate({
+                to: `/product/updateProduct/${Board.data._id}`,
+              });
+            }}
+          >
             <MdOutlineSystemUpdateAlt size={20} />
           </button>
           <button
@@ -65,22 +74,22 @@ export default function SingleGame({
             className="fixed inset-0 bg-[#25252586] bg-opacity-70 z-60 flex items-center justify-center"
           >
             <div className="bg-[#1f1f2b] text-white p-6 rounded-xl border border-[#AD46FF] shadow-2xl w-[90%] max-w-lg">
-              <h3 className="text-xl font-bold mb-4">დამატების წაშლა</h3>
+              <h3 className="text-xl font-bold mb-4">delete</h3>
               <p>
-                გსურს წაშალო <strong>"{Board.data.name}"</strong>?
+                Do you want to delete it <strong>"{Board.data.name}"</strong>?
               </p>
               <div className="mt-6 flex justify-end gap-4">
                 <button
                   onClick={() => setIsModalDelete(false)}
                   className="px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition"
                 >
-                  გაუქმება
+                  Cancellation
                 </button>
                 <button
                   onClick={handleDelete}
                   className="px-4 py-2 bg-red-600 rounded hover:bg-red-700 transition"
                 >
-                  წაშლა
+                  Delete
                 </button>
               </div>
             </div>

@@ -58,3 +58,37 @@ export const deleteBoard = async (Id: number) => {
 
   return response.data;
 };
+
+export const updatecardboards = async ({
+  id,
+  name,
+  description,
+  price,
+  image,
+  category,
+  author,
+}: {
+  id: Number;
+  name: string;
+  description: string;
+  price: Number;
+  image: string;
+  category: string;
+  author: string;
+}) => {
+  const response = await instance.put(`/api/cardboards/${id}`, {
+    id,
+    name,
+    description,
+    price,
+    image,
+    category,
+    author,
+  });
+
+  if (!response) {
+    throw new Error("Failed to update cardboards");
+  }
+
+  return response.data;
+};
