@@ -39,7 +39,23 @@ export const GetBoard = async () => {
 
   return response.data;
 };
+export const getBoardPaginated = async (
+  page: number = 1,
+  limit: number = 10
+) => {
+  const response = await instance.get("/api/cardboards", {
+    params: {
+      page,
+      limit,
+    },
+  });
 
+  if (!response || !response.data) {
+    throw new Error("Failed to fetch paginated blogs");
+  }
+
+  return response.data;
+};
 export const GetSingleBoard = async (id: string | number) => {
   const response = await instance.get(`/api/cardboards/${id}`);
   console.log("PRgia:", response.data);

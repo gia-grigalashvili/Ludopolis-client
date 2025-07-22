@@ -13,7 +13,8 @@ import toast from "react-hot-toast";
 import { useNavigate } from "@tanstack/react-router";
 import Update from "./Update";
 import { UseDeleteBoard } from "@/hooks/UseDeleteBoard";
-
+import { UseGetBoardPaginated } from "../../hooks/UseGetBoardPaginated";
+import TableFooter from "./TableFooter";
 type Board = {
   _id: number;
   name: string;
@@ -32,7 +33,8 @@ export default function AllBoard() {
   const [selectedBoardToDelete, setSelectedBoardToDelete] =
     useState<Board | null>(null);
   const [isModalDelete, setIsModalDelete] = useState(false);
-  const { data, isLoading, isError } = UseGetBoard();
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, isLoading, isError } = UseGetBoardPaginated(currentPage);
   const navigate = useNavigate();
   const rawData = data?.data ?? [];
   const deleteMutation = UseDeleteBoard();
@@ -221,6 +223,17 @@ export default function AllBoard() {
               )}
             </tbody>
           </table>
+          {data && (
+            <div className="p-4">
+              <TableFooter
+                currentPage={data.page}
+                total={data.total}
+                postsLength={filteredData.length}
+                limit={Math.ceil(data.total / data.totalPages)}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          )}
         </div>
       </motion.div>
       <AnimatePresence>
