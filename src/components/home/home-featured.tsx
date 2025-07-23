@@ -38,6 +38,24 @@ export function HomeFeatured() {
       </section>
     );
   }
+  if (!threeCardBoards?.data || threeCardBoards.data.length === 0) {
+    return (
+      <section className="py-16 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center">
+            <div className="bg-yellow-900/20 border border-yellow-500/50 p-8 rounded">
+              <h3 className="text-xl font-bold text-yellow-400 mb-2">
+                No featured games available
+              </h3>
+              <p className="text-yellow-300">
+                Check back later for new featured games!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-16 px-6">
