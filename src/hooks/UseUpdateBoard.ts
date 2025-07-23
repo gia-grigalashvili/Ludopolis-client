@@ -12,7 +12,6 @@ export const UseUpdateBoard = () => {
       price,
       image,
       category,
-      author,
     }: {
       id: Number;
       name: string;
@@ -20,7 +19,6 @@ export const UseUpdateBoard = () => {
       price: Number;
       image: string;
       category: string;
-      author: string;
     }) =>
       updatecardboards({
         id,
@@ -29,7 +27,6 @@ export const UseUpdateBoard = () => {
         price,
         image,
         category,
-        author,
       }),
 
     onSuccess: () => {

@@ -12,14 +12,12 @@ export const UseCreateBoard = () => {
       price,
       image,
       category,
-      author,
     }: {
       name: string;
       description: string;
       price: Number;
       image: string;
       category: string;
-      author: string;
     }) =>
       createBoard({
         name,
@@ -27,7 +25,6 @@ export const UseCreateBoard = () => {
         price,
         image,
         category,
-        author,
       }),
     onSuccess: () => {
       toast.success("cardboards created successfully!");

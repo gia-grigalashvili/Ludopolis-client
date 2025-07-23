@@ -8,17 +8,18 @@ import { IoSearchSharp } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 import { MdDelete, MdOutlineSystemUpdateAlt } from "react-icons/md";
 import type { ColumnDef } from "@tanstack/react-table";
-import { UseGetBoard } from "../../hooks/UseGetBoard";
+
 import toast from "react-hot-toast";
 import { useNavigate } from "@tanstack/react-router";
 import Update from "./Update";
 import { UseDeleteBoard } from "@/hooks/UseDeleteBoard";
 import { UseGetBoardPaginated } from "../../hooks/UseGetBoardPaginated";
 import TableFooter from "./TableFooter";
+import { UseGetCategories } from "../../hooks/UseGetCategories";
 type Board = {
   _id: number;
   name: string;
-  author: string;
+
   category: string;
   description: string;
   price: number;
@@ -27,6 +28,7 @@ type Board = {
 };
 
 export default function AllBoard() {
+  const { data: categories, isLoading: loadingCategories } = UseGetCategories();
   const [search, setSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState<any>(null);
@@ -38,7 +40,7 @@ export default function AllBoard() {
   const navigate = useNavigate();
   const rawData = data?.data ?? [];
   const deleteMutation = UseDeleteBoard();
-
+  console.log(data);
   const handleDelete = (board: Board) => {
     deleteMutation.mutate(board._id, {
       onSuccess: () => {
@@ -70,10 +72,7 @@ export default function AllBoard() {
         header: "Name",
         accessorKey: "name",
       },
-      {
-        header: "Author",
-        accessorKey: "author",
-      },
+
       {
         header: "Category",
         accessorKey: "category",

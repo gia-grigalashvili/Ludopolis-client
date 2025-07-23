@@ -4,9 +4,8 @@ import { toast } from "react-hot-toast";
 import { UseCreateBoard } from "../../hooks/UseCreateBoard";
 import "react-quill-new/dist/quill.snow.css";
 import ReactQuill from "react-quill-new";
-
+import { UseGetCategories } from "../../hooks/UseGetCategories";
 type FormValues = {
-  author: string;
   name: string;
   description: string;
   price: string;
@@ -17,17 +16,27 @@ type FormValues = {
 export default function ProductForm() {
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [imagePreview, setImagePreview] = useState("");
-
+  const { data: categories, isLoading: loadingCategories } = UseGetCategories();
   const { mutateAsync } = UseCreateBoard();
 
-  const productForm = useForm<FormValues>({
+  const productForm = useForm<
+    FormValues,
+    any,
+    any,
+    any,
+    any,
+    any,
+    any,
+    any,
+    any,
+    any
+  >({
     defaultValues: {
       name: "",
       description: "",
       price: "",
       image: "",
       category: "",
-      author: "",
     },
     onSubmit: async ({ value }) => {
       setSubmitAttempted(true);
@@ -39,7 +48,6 @@ export default function ProductForm() {
         return toast.error("Valid price is required");
       if (!value.image.trim()) return toast.error("Image is required");
       if (!value.category.trim()) return toast.error("Category is required");
-      if (!value.author.trim()) return toast.error("Author is required");
 
       try {
         await mutateAsync({
@@ -48,7 +56,6 @@ export default function ProductForm() {
           price: Number(value.price),
           image: value.image,
           category: value.category,
-          author: value.author,
         });
 
         toast.success("Product created successfully!");
@@ -160,38 +167,33 @@ export default function ProductForm() {
       <productForm.Field name="category">
         {(field) => (
           <div className="mb-4">
-            <label className="block mb-1">Category*</label>
-            <input
-              type="text"
-              value={field.state.value}
-              onChange={(e) => field.handleChange(e.target.value)}
-              className={`w-full px-4 py-2 rounded-md bg-white/5 border border-white/20 focus:ring-2 focus:ring-orange-400/40 ${
-                showError("category") ? "border-red-500" : ""
-              }`}
-              placeholder="Product category"
-            />
+            <label className="block mb-1">Category</label>
+
+            {loadingCategories ? (
+              <p className="text-sm text-gray-400">Loading</p>
+            ) : (
+              <select
+                value={field.state.value}
+                onChange={(e) => field.handleChange(e.target.value)}
+                className={`w-full px-4 py-2 rounded-md bg-white/5 border border-white/20 focus:ring-2 focus:ring-orange-400/40 ${
+                  showError("category") ? "border-red-500" : ""
+                }`}
+              >
+                <option value="">Choose a category</option>
+                {categories?.map((cat: { _id: string; name: string }) => (
+                  <option
+                    className="bg-[#1f1f2b]"
+                    key={cat._id}
+                    value={cat._id}
+                  >
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            )}
+
             {showError("category") && (
               <p className="text-red-500 text-sm mt-1">Category is required</p>
-            )}
-          </div>
-        )}
-      </productForm.Field>
-
-      <productForm.Field name="author">
-        {(field) => (
-          <div className="mb-4">
-            <label className="block mb-1">Author*</label>
-            <input
-              type="text"
-              value={field.state.value}
-              onChange={(e) => field.handleChange(e.target.value)}
-              className={`w-full px-4 py-2 rounded-md bg-white/5 border border-white/20 focus:ring-2 focus:ring-orange-400/40 ${
-                showError("author") ? "border-red-500" : ""
-              }`}
-              placeholder="Author name"
-            />
-            {showError("author") && (
-              <p className="text-red-500 text-sm mt-1">Author is required</p>
             )}
           </div>
         )}

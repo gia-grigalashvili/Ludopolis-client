@@ -13,6 +13,7 @@ import { Route as ProductRouteRouteImport } from './routes/product/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductIndexRouteImport } from './routes/product/index'
 import { Route as ProductMonthRouteImport } from './routes/product/month'
+import { Route as ProductCategoriesRouteImport } from './routes/product/categories'
 import { Route as ProductAllRouteImport } from './routes/product/All'
 import { Route as ProductIdRouteImport } from './routes/product/$id'
 import { Route as ProductUpdateProductIdRouteImport } from './routes/product/updateProduct/$id'
@@ -37,6 +38,11 @@ const ProductMonthRoute = ProductMonthRouteImport.update({
   path: '/month',
   getParentRoute: () => ProductRouteRoute,
 } as any)
+const ProductCategoriesRoute = ProductCategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => ProductRouteRoute,
+} as any)
 const ProductAllRoute = ProductAllRouteImport.update({
   id: '/All',
   path: '/All',
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/product': typeof ProductRouteRouteWithChildren
   '/product/$id': typeof ProductIdRoute
   '/product/All': typeof ProductAllRoute
+  '/product/categories': typeof ProductCategoriesRoute
   '/product/month': typeof ProductMonthRoute
   '/product/': typeof ProductIndexRoute
   '/product/updateProduct/$id': typeof ProductUpdateProductIdRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/product/$id': typeof ProductIdRoute
   '/product/All': typeof ProductAllRoute
+  '/product/categories': typeof ProductCategoriesRoute
   '/product/month': typeof ProductMonthRoute
   '/product': typeof ProductIndexRoute
   '/product/updateProduct/$id': typeof ProductUpdateProductIdRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/product': typeof ProductRouteRouteWithChildren
   '/product/$id': typeof ProductIdRoute
   '/product/All': typeof ProductAllRoute
+  '/product/categories': typeof ProductCategoriesRoute
   '/product/month': typeof ProductMonthRoute
   '/product/': typeof ProductIndexRoute
   '/product/updateProduct/$id': typeof ProductUpdateProductIdRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/product'
     | '/product/$id'
     | '/product/All'
+    | '/product/categories'
     | '/product/month'
     | '/product/'
     | '/product/updateProduct/$id'
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/product/$id'
     | '/product/All'
+    | '/product/categories'
     | '/product/month'
     | '/product'
     | '/product/updateProduct/$id'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '/product'
     | '/product/$id'
     | '/product/All'
+    | '/product/categories'
     | '/product/month'
     | '/product/'
     | '/product/updateProduct/$id'
@@ -144,6 +156,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductMonthRouteImport
       parentRoute: typeof ProductRouteRoute
     }
+    '/product/categories': {
+      id: '/product/categories'
+      path: '/categories'
+      fullPath: '/product/categories'
+      preLoaderRoute: typeof ProductCategoriesRouteImport
+      parentRoute: typeof ProductRouteRoute
+    }
     '/product/All': {
       id: '/product/All'
       path: '/All'
@@ -171,6 +190,7 @@ declare module '@tanstack/react-router' {
 interface ProductRouteRouteChildren {
   ProductIdRoute: typeof ProductIdRoute
   ProductAllRoute: typeof ProductAllRoute
+  ProductCategoriesRoute: typeof ProductCategoriesRoute
   ProductMonthRoute: typeof ProductMonthRoute
   ProductIndexRoute: typeof ProductIndexRoute
   ProductUpdateProductIdRoute: typeof ProductUpdateProductIdRoute
@@ -179,6 +199,7 @@ interface ProductRouteRouteChildren {
 const ProductRouteRouteChildren: ProductRouteRouteChildren = {
   ProductIdRoute: ProductIdRoute,
   ProductAllRoute: ProductAllRoute,
+  ProductCategoriesRoute: ProductCategoriesRoute,
   ProductMonthRoute: ProductMonthRoute,
   ProductIndexRoute: ProductIndexRoute,
   ProductUpdateProductIdRoute: ProductUpdateProductIdRoute,

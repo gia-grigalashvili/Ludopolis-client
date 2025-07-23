@@ -13,6 +13,7 @@ export default function Sidebar() {
     { to: "/product/", label: "➕ Add CardBoard" },
     { to: "/product/month", label: "📅 Month" },
     { to: "/product/all", label: "📚 All Blogs" },
+    { to: "/product/categories", label: "📚 All categories" },
   ];
 
   return (

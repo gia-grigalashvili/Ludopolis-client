@@ -6,14 +6,12 @@ export const createBoard = async ({
   price,
   image,
   category,
-  author,
 }: {
   name: string;
   description: string;
   price: Number;
   image: string;
   category: string;
-  author: string;
 }) => {
   const response = await instance.post("/api/cardboards", {
     name,
@@ -21,7 +19,6 @@ export const createBoard = async ({
     price,
     image,
     category,
-    author,
   });
 
   if (!response) {
@@ -82,7 +79,6 @@ export const updatecardboards = async ({
   price,
   image,
   category,
-  author,
 }: {
   id: Number;
   name: string;
@@ -90,7 +86,6 @@ export const updatecardboards = async ({
   price: Number;
   image: string;
   category: string;
-  author: string;
 }) => {
   const response = await instance.put(`/api/cardboards/${id}`, {
     id,
@@ -99,7 +94,6 @@ export const updatecardboards = async ({
     price,
     image,
     category,
-    author,
   });
 
   if (!response) {
