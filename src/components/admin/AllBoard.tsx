@@ -15,7 +15,7 @@ import Update from "./Update";
 import { UseDeleteBoard } from "@/hooks/UseDeleteBoard";
 import { UseGetBoardPaginated } from "../../hooks/UseGetBoardPaginated";
 import TableFooter from "./TableFooter";
-import { UseGetCategories } from "../../hooks/UseGetCategories";
+
 type Board = {
   _id: number;
   name: string;
@@ -28,7 +28,6 @@ type Board = {
 };
 
 export default function AllBoard() {
-  const { data: categories, isLoading: loadingCategories } = UseGetCategories();
   const [search, setSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState<any>(null);
@@ -76,6 +75,7 @@ export default function AllBoard() {
       {
         header: "Category",
         accessorKey: "category",
+        accessorFn: (row) => row.category?.name,
       },
       {
         header: "Price",

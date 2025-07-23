@@ -36,7 +36,7 @@ export default function Update({ selectedBlog, setIsModalOpen }: UpdateProps) {
       description: blogData.description || "",
       price: blogData.price?.toString() || "",
       image: blogData.image || "",
-      category: blogData.category || "",
+      category: blogData.category.name || "",
     },
     onSubmit: async ({ value }) => {
       setSubmitAttempted(true);
@@ -71,7 +71,6 @@ export default function Update({ selectedBlog, setIsModalOpen }: UpdateProps) {
         price: Number(value.price),
         image: value.image,
         category: value.category,
-        author: blogData.author,
       });
 
       setIsModalOpen(false);

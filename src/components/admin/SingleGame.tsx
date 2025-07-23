@@ -22,7 +22,7 @@ export default function SingleGame({
       },
     });
   };
-
+  console.log(Board);
   return (
     <div>
       <div className="max-w-3xl mx-auto p-6 bg-[#1f1f2b] text-white rounded-xl shadow-lg relative">
@@ -47,9 +47,7 @@ export default function SingleGame({
         </div>
 
         <h1 className="text-3xl font-bold mb-4">{Board.data.name}</h1>
-        <p className="text-sm text-gray-400 mb-2">
-          ავტორი: {Board.data.author ?? "უცნობი"}
-        </p>
+
         <img
           src={Board.data.image}
           alt={Board.data.name}
@@ -60,7 +58,7 @@ export default function SingleGame({
           dangerouslySetInnerHTML={{ __html: Board.data.description }}
         />
         <p className="italic text-gray-300 mb-2">
-          კატეგორია: {Board.data.category ?? "უცნობი"}
+          კატეგორია: {Board.data.category?.name}
         </p>
       </div>
 
