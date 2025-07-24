@@ -1,4 +1,4 @@
-import { GetBoard } from "../service/product";
+import { GetBoard } from "../services/product";
 import { useQuery } from "@tanstack/react-query";
 
 export const UseGetBoard = () => {

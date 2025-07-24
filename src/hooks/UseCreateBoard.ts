@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
-import { createBoard } from "../service/product";
+import { createBoard } from "../services/product";
 
 export const UseCreateBoard = () => {
   const queryClient = useQueryClient();
