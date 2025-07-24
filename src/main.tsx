@@ -3,20 +3,24 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-const queryClient = new QueryClient();
-import { Toaster } from "react-hot-toast";
+
 // Import the generated route tree
-import { routeTree } from "./routeTree.gen";
 import { getCurrentUser } from "./services/auth";
-import "./styles.css";
+
+import { Toaster } from "react-hot-toast";
+import { routeTree } from "./routeTree.gen";
+
 import reportWebVitals from "./reportWebVitals.ts";
 
-// Create a new router instance
+// create react-query client
+const queryClient = new QueryClient();
+
 const router = createRouter({
   routeTree,
   context: {
     getCurrentUser,
   },
+
   defaultPreload: "intent",
   scrollRestoration: true,
   defaultStructuralSharing: true,
