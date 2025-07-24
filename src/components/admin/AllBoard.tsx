@@ -75,7 +75,7 @@ export default function AllBoard() {
       {
         header: "Category",
         accessorKey: "category",
-        accessorFn: (row) => row.category?.name,
+        // accessorFn: (row) => row.category.id,
       },
       {
         header: "Price",

@@ -14,8 +14,10 @@ import { Route as SigninRouteImport } from './routes/signin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as ProductRouteRouteImport } from './routes/product/route'
+import { Route as GamesRouteRouteImport } from './routes/games/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductIndexRouteImport } from './routes/product/index'
+import { Route as GamesIndexRouteImport } from './routes/games/index'
 import { Route as ProductMonthRouteImport } from './routes/product/month'
 import { Route as ProductCategoriesRouteImport } from './routes/product/categories'
 import { Route as ProductAllRouteImport } from './routes/product/All'
@@ -46,6 +48,11 @@ const ProductRouteRoute = ProductRouteRouteImport.update({
   path: '/product',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GamesRouteRoute = GamesRouteRouteImport.update({
+  id: '/games',
+  path: '/games',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -55,6 +62,11 @@ const ProductIndexRoute = ProductIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ProductRouteRoute,
+} as any)
+const GamesIndexRoute = GamesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GamesRouteRoute,
 } as any)
 const ProductMonthRoute = ProductMonthRouteImport.update({
   id: '/month',
@@ -84,6 +96,7 @@ const ProductUpdateProductIdRoute = ProductUpdateProductIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/games': typeof GamesRouteRouteWithChildren
   '/product': typeof ProductRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/signin': typeof SigninRoute
@@ -92,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/product/All': typeof ProductAllRoute
   '/product/categories': typeof ProductCategoriesRoute
   '/product/month': typeof ProductMonthRoute
+  '/games/': typeof GamesIndexRoute
   '/product/': typeof ProductIndexRoute
   '/product/updateProduct/$id': typeof ProductUpdateProductIdRoute
 }
@@ -104,12 +118,14 @@ export interface FileRoutesByTo {
   '/product/All': typeof ProductAllRoute
   '/product/categories': typeof ProductCategoriesRoute
   '/product/month': typeof ProductMonthRoute
+  '/games': typeof GamesIndexRoute
   '/product': typeof ProductIndexRoute
   '/product/updateProduct/$id': typeof ProductUpdateProductIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/games': typeof GamesRouteRouteWithChildren
   '/product': typeof ProductRouteRouteWithChildren
   '/_authenticated': typeof AuthenticatedRoute
   '/about': typeof AboutRoute
@@ -119,6 +135,7 @@ export interface FileRoutesById {
   '/product/All': typeof ProductAllRoute
   '/product/categories': typeof ProductCategoriesRoute
   '/product/month': typeof ProductMonthRoute
+  '/games/': typeof GamesIndexRoute
   '/product/': typeof ProductIndexRoute
   '/product/updateProduct/$id': typeof ProductUpdateProductIdRoute
 }
@@ -126,6 +143,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/games'
     | '/product'
     | '/about'
     | '/signin'
@@ -134,6 +152,7 @@ export interface FileRouteTypes {
     | '/product/All'
     | '/product/categories'
     | '/product/month'
+    | '/games/'
     | '/product/'
     | '/product/updateProduct/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -146,11 +165,13 @@ export interface FileRouteTypes {
     | '/product/All'
     | '/product/categories'
     | '/product/month'
+    | '/games'
     | '/product'
     | '/product/updateProduct/$id'
   id:
     | '__root__'
     | '/'
+    | '/games'
     | '/product'
     | '/_authenticated'
     | '/about'
@@ -160,12 +181,14 @@ export interface FileRouteTypes {
     | '/product/All'
     | '/product/categories'
     | '/product/month'
+    | '/games/'
     | '/product/'
     | '/product/updateProduct/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GamesRouteRoute: typeof GamesRouteRouteWithChildren
   ProductRouteRoute: typeof ProductRouteRouteWithChildren
   AuthenticatedRoute: typeof AuthenticatedRoute
   AboutRoute: typeof AboutRoute
@@ -210,6 +233,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/games': {
+      id: '/games'
+      path: '/games'
+      fullPath: '/games'
+      preLoaderRoute: typeof GamesRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -223,6 +253,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/product/'
       preLoaderRoute: typeof ProductIndexRouteImport
       parentRoute: typeof ProductRouteRoute
+    }
+    '/games/': {
+      id: '/games/'
+      path: '/'
+      fullPath: '/games/'
+      preLoaderRoute: typeof GamesIndexRouteImport
+      parentRoute: typeof GamesRouteRoute
     }
     '/product/month': {
       id: '/product/month'
@@ -262,6 +299,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface GamesRouteRouteChildren {
+  GamesIndexRoute: typeof GamesIndexRoute
+}
+
+const GamesRouteRouteChildren: GamesRouteRouteChildren = {
+  GamesIndexRoute: GamesIndexRoute,
+}
+
+const GamesRouteRouteWithChildren = GamesRouteRoute._addFileChildren(
+  GamesRouteRouteChildren,
+)
+
 interface ProductRouteRouteChildren {
   ProductIdRoute: typeof ProductIdRoute
   ProductAllRoute: typeof ProductAllRoute
@@ -286,6 +335,7 @@ const ProductRouteRouteWithChildren = ProductRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GamesRouteRoute: GamesRouteRouteWithChildren,
   ProductRouteRoute: ProductRouteRouteWithChildren,
   AuthenticatedRoute: AuthenticatedRoute,
   AboutRoute: AboutRoute,

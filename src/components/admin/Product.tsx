@@ -183,8 +183,8 @@ export default function ProductForm() {
                 {categories?.map((cat: { _id: string; name: string }) => (
                   <option
                     className="bg-[#1f1f2b]"
-                    key={cat._id}
-                    value={cat._id}
+                    key={cat.name}
+                    value={cat.name}
                   >
                     {cat.name}
                   </option>

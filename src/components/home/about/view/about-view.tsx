@@ -6,6 +6,7 @@ import AboutHero from "@/components/home/about/about-hero";
 import AboutStory from "@/components/home/about/about-story";
 import AboutOffer from "@/components/home/about/about-offer";
 import AboutMission from "@/components/home/about/about-mission";
+
 export default function AboutView() {
   return (
     <div className="min-h-screen relative overflow-hidden">
