@@ -20,7 +20,7 @@ type Board = {
   _id: number;
   name: string;
 
-  category: string;
+  category: [];
   description: string;
   price: number;
   image: string;
