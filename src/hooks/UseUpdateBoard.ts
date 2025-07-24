@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updatecardboards } from "../service/product";
+import { updatecardboards } from "../services/product";
 import { toast } from "react-hot-toast";
 export const UseUpdateBoard = () => {
   const queryClient = useQueryClient();

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
-import { createCategories } from "../service/Categories";
+import { createCategories } from "../services/categories";
 
 export const UseCreateCategories = () => {
   const queryClient = useQueryClient();

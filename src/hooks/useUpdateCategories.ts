@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updatecategories } from "../service/Categories";
+import { updatecategories } from "../services/categories";
 import { toast } from "react-hot-toast";
 export const useUpdateCategories = () => {
   const queryClient = useQueryClient();
