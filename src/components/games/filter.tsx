@@ -7,7 +7,7 @@ interface FilterProps {
 }
 
 export default function Filter({ onFilterChange }: FilterProps) {
-  const { data, isLoading, isError } = UseGetCategories();
+  const { data } = UseGetCategories();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +27,6 @@ export default function Filter({ onFilterChange }: FilterProps) {
 
   return (
     <>
-      {/* Burger button for mobile */}
       <button
         className="md:hidden fixed top-4 left-4 z-50 text-white bg-[#1f2937]/80 p-2 rounded-md"
         onClick={() => setIsOpen(!isOpen)}
@@ -35,14 +34,10 @@ export default function Filter({ onFilterChange }: FilterProps) {
         {isOpen ? <IoMdClose size={24} /> : <IoMdMenu size={24} />}
       </button>
 
-      {/* Sidebar - desktop visible, mobile toggle */}
       <aside
-        className={`
-          fixed top-0 left-0 h-screen w-64 bg-[#1f2937]/80 text-white p-6 backdrop-blur-lg border-r border-white/10 
-          transition-transform duration-300 z-40
-          ${isOpen ? "translate-x-0" : "-translate-x-full"}
-          md:translate-x-0 md:static md:block
-        `}
+        className={`fixed top-0 left-0 h-screen w-64 bg-[#1f1f2b]/80 text-gray-200 p-6 backdrop-blur-lg border-r border-white/10 transition-transform duration-300 z-40
+        ${isOpen ? "translate-x-0" : "-translate-x-full"}
+        md:translate-x-0 md:static md:block`}
       >
         <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
           Categories
@@ -52,21 +47,21 @@ export default function Filter({ onFilterChange }: FilterProps) {
           <input
             type="text"
             placeholder="Search category..."
-            className="w-full pl-10 pr-3 py-2 rounded-md bg-white/10 text-white"
+            className="w-full pl-10 pr-3 py-2 rounded-md bg-[#2d2d44] text-gray-200 placeholder-gray-400 border border-white/10"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
         <div className="space-y-2 overflow-y-auto max-h-[70vh] pr-1">
-          {filteredCategories?.map((cat: any) => (
+          {filteredCategories?.map((cat: any, index: number) => (
             <div
-              key={cat.id}
+              key={cat.id || cat._id || cat.name || index}
               onClick={() => toggleCategory(cat.name)}
-              className={`p-2 cursor-pointer rounded ${
+              className={`p-2 cursor-pointer rounded transition ${
                 selectedCategories.includes(cat.name)
-                  ? "bg-white/10"
-                  : "hover:bg-white/5"
+                  ? "bg-purple-700/20 text-purple-300"
+                  : "hover:bg-white/10 text-gray-300"
               }`}
             >
               {cat.name}
@@ -75,7 +70,6 @@ export default function Filter({ onFilterChange }: FilterProps) {
         </div>
       </aside>
 
-      {/* Background overlay for mobile when sidebar is open */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/40 z-30 md:hidden"

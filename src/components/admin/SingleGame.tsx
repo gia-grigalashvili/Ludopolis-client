@@ -58,7 +58,7 @@ export default function SingleGame({
           dangerouslySetInnerHTML={{ __html: Board.data.description }}
         />
         <p className="italic text-gray-300 mb-2">
-          კატეგორია: {Board.data.category?.name}
+          კატეგორია: {Board.data.category}
         </p>
       </div>
 

@@ -2,18 +2,19 @@ import { UseGetBoardPaginated } from "../../hooks/UseGetBoardPaginated";
 import { useState } from "react";
 import TableFooter from "../admin/TableFooter";
 import GameCardSkeleton from "./skeleton/GameCardSkeleton";
+import { useNavigate } from "@tanstack/react-router";
+
 
 interface AllGamesProps {
   selectedCategories: string[];
   searchTerm: string;
-  navigate: any;
 }
 
 export default function AllGames({
   selectedCategories,
   searchTerm,
-  navigate,
 }: AllGamesProps) {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const { data, isLoading, isError, error } = UseGetBoardPaginated(currentPage);
 
@@ -39,13 +40,14 @@ export default function AllGames({
 
   return (
     <div>
+     
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredItems.map((item) => (
           <div key={item.id} className="group">
-            <div className="bg-[#1f1f2b]/70 rounded-2xl backdrop-blur-sm border border-purple-500/50 p-5 hover:border-purple-400 hover:bg-black/60 transition-all">
+            <div className="bg-[#1f1f31] rounded-2xl backdrop-blur-sm border border-neutral-600 p-5 hover:border-purple-400 hover:bg-[#383859]  transition-all">
               <div
                 className="aspect-square relative rounded-2xl overflow-hidden border-2 border-white/20 mb-4 cursor-pointer"
-                onClick={() => navigate({ to: `/games/${item.name}` })}
+                onClick={() => navigate({ to: `/games/${item._id}` })}
               >
                 <img
                   src={item.image}
@@ -56,18 +58,18 @@ export default function AllGames({
                   View Card
                 </div>
               </div>
-              <h4 className="text-xl font-bold text-purple-100 mb-2 line-clamp-1">
+              <h4 className="text-xl font-bold text-gray-200 mb-2 line-clamp-1">
                 {item.name}
               </h4>
               <p className="text-sm text-purple-300 mb-1">{item.category}</p>
-              <p className="text-sm text-purple-200 line-clamp-2 mb-4">
+              <p className="text-sm text-gray-400 line-clamp-2 mb-4">
                 {item.description}
               </p>
               <div className="flex justify-between items-center">
-                <span className="text-white text-xl font-bold">
+                <span className="text-gray-100 text-xl font-bold">
                   ${item.price}
                 </span>
-                <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition">
+                <button className="  bg-transparent hover:bg-purple-600 border-1 text-white px-4 py-2 rounded-md text-sm font-semibold transition">
                   ADD TO CART
                 </button>
               </div>

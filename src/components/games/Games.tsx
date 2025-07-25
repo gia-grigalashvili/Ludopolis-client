@@ -1,6 +1,6 @@
 // Games.tsx
 import { useState } from "react";
-import Filter from "./Filter";
+import Filter from "./filter";
 import AllGames from "./AllGames";
 
 import { Header } from "../header";

@@ -1,5 +1,3 @@
-import React from "react";
-
 interface SearchProps {
   searchTerm: string;
   onSearchChange: (term: string) => void;
