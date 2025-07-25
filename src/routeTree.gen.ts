@@ -22,6 +22,7 @@ import { Route as ProductMonthRouteImport } from './routes/product/month'
 import { Route as ProductCategoriesRouteImport } from './routes/product/categories'
 import { Route as ProductAllRouteImport } from './routes/product/All'
 import { Route as ProductIdRouteImport } from './routes/product/$id'
+import { Route as GamesIdRouteImport } from './routes/games/$id'
 import { Route as ProductUpdateProductIdRouteImport } from './routes/product/updateProduct/$id'
 
 const SignupRoute = SignupRouteImport.update({
@@ -88,6 +89,11 @@ const ProductIdRoute = ProductIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => ProductRouteRoute,
 } as any)
+const GamesIdRoute = GamesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => GamesRouteRoute,
+} as any)
 const ProductUpdateProductIdRoute = ProductUpdateProductIdRouteImport.update({
   id: '/updateProduct/$id',
   path: '/updateProduct/$id',
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/games/$id': typeof GamesIdRoute
   '/product/$id': typeof ProductIdRoute
   '/product/All': typeof ProductAllRoute
   '/product/categories': typeof ProductCategoriesRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/games/$id': typeof GamesIdRoute
   '/product/$id': typeof ProductIdRoute
   '/product/All': typeof ProductAllRoute
   '/product/categories': typeof ProductCategoriesRoute
@@ -131,6 +139,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/games/$id': typeof GamesIdRoute
   '/product/$id': typeof ProductIdRoute
   '/product/All': typeof ProductAllRoute
   '/product/categories': typeof ProductCategoriesRoute
@@ -148,6 +157,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/signin'
     | '/signup'
+    | '/games/$id'
     | '/product/$id'
     | '/product/All'
     | '/product/categories'
@@ -161,6 +171,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/signin'
     | '/signup'
+    | '/games/$id'
     | '/product/$id'
     | '/product/All'
     | '/product/categories'
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/signin'
     | '/signup'
+    | '/games/$id'
     | '/product/$id'
     | '/product/All'
     | '/product/categories'
@@ -289,6 +301,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductIdRouteImport
       parentRoute: typeof ProductRouteRoute
     }
+    '/games/$id': {
+      id: '/games/$id'
+      path: '/$id'
+      fullPath: '/games/$id'
+      preLoaderRoute: typeof GamesIdRouteImport
+      parentRoute: typeof GamesRouteRoute
+    }
     '/product/updateProduct/$id': {
       id: '/product/updateProduct/$id'
       path: '/updateProduct/$id'
@@ -300,10 +319,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface GamesRouteRouteChildren {
+  GamesIdRoute: typeof GamesIdRoute
   GamesIndexRoute: typeof GamesIndexRoute
 }
 
 const GamesRouteRouteChildren: GamesRouteRouteChildren = {
+  GamesIdRoute: GamesIdRoute,
   GamesIndexRoute: GamesIndexRoute,
 }
 

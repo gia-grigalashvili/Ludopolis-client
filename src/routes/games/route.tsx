@@ -11,7 +11,8 @@ export const Route = createFileRoute("/games")({
 
 function BlogLayout() {
   return (
-    <div>
+    <div className="relative min-h-screen">
+      {/* Waves should fill entire height of page */}
       <div className="absolute inset-0 z-0">
         <Waves
           lineColor="#ffffff"
@@ -27,8 +28,10 @@ function BlogLayout() {
           yGap={36}
         />
       </div>
+
       <TargetCursor spinDuration={2} hideDefaultCursor={true} />
 
+      {/* Content on top */}
       <div className="relative z-10 flex">
         <main className="ml-0 text-white w-full">
           <Outlet />

@@ -5,6 +5,7 @@ import { UseCreateBoard } from "../../hooks/UseCreateBoard";
 import "react-quill-new/dist/quill.snow.css";
 import ReactQuill from "react-quill-new";
 import { UseGetCategories } from "../../hooks/UseGetCategories";
+
 type FormValues = {
   name: string;
   description: string;
@@ -13,24 +14,19 @@ type FormValues = {
   category: string;
 };
 
+const stripHtml = (html: string) => {
+  const tmp = document.createElement("DIV");
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || "";
+};
+
 export default function ProductForm() {
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [imagePreview, setImagePreview] = useState("");
   const { data: categories, isLoading: loadingCategories } = UseGetCategories();
   const { mutateAsync } = UseCreateBoard();
 
-  const productForm = useForm<
-    FormValues,
-    any,
-    any,
-    any,
-    any,
-    any,
-    any,
-    any,
-    any,
-    any
-  >({
+  const productForm = useForm<FormValues>({
     defaultValues: {
       name: "",
       description: "",
@@ -52,7 +48,7 @@ export default function ProductForm() {
       try {
         await mutateAsync({
           name: value.name,
-          description: value.description,
+          description: stripHtml(value.description),
           price: Number(value.price),
           image: value.image,
           category: value.category,
@@ -130,7 +126,7 @@ export default function ProductForm() {
               className={`w-full rounded-md bg-white/5 backdrop-blur-sm border border-white/20 transition-all duration-200 focus-within:ring-2 focus-within:ring-orange-400/40 ${
                 showError("description") ? "border-red-500" : ""
               }`}
-              placeholder="Write your blog content..."
+              placeholder="Write your product description..."
               theme="snow"
             />
             {showError("description") && (
@@ -167,10 +163,9 @@ export default function ProductForm() {
       <productForm.Field name="category">
         {(field) => (
           <div className="mb-4">
-            <label className="block mb-1">Category</label>
-
+            <label className="block mb-1">Category*</label>
             {loadingCategories ? (
-              <p className="text-sm text-gray-400">Loading</p>
+              <p className="text-sm text-gray-400">Loading...</p>
             ) : (
               <select
                 value={field.state.value}
@@ -183,7 +178,7 @@ export default function ProductForm() {
                 {categories?.map((cat: { _id: string; name: string }) => (
                   <option
                     className="bg-[#1f1f2b]"
-                    key={cat.name}
+                    key={cat._id}
                     value={cat.name}
                   >
                     {cat.name}
@@ -191,7 +186,6 @@ export default function ProductForm() {
                 ))}
               </select>
             )}
-
             {showError("category") && (
               <p className="text-red-500 text-sm mt-1">Category is required</p>
             )}
@@ -215,11 +209,14 @@ export default function ProductForm() {
               }`}
               placeholder="https://example.com/image.jpg"
             />
+            <div className="text-sm text-gray-400 my-1">
+              or upload from your device:
+            </div>
             <input
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="mt-2"
+              className="mt-1"
             />
             {showError("image") && (
               <p className="text-red-500 text-sm mt-1">Image is required</p>

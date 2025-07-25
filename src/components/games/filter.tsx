@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { UseGetCategories } from "@/hooks/UseGetCategories";
 import { IoMdMenu, IoMdClose } from "react-icons/io";
 
@@ -7,10 +7,10 @@ interface FilterProps {
 }
 
 export default function Filter({ onFilterChange }: FilterProps) {
-  const { data, isLoading } = UseGetCategories();
+  const { data, isLoading, isError } = UseGetCategories();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isOpen, setIsOpen] = useState(false); // <-- sidebar toggle state
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleCategory = (categoryName: string) => {
     const updated = selectedCategories.includes(categoryName)
