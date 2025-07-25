@@ -1,7 +1,8 @@
 import { useGetThreeCard } from "@/hooks/useGetThreeCard";
 import FeaturedSkeletons from "./skeletons/featured-skeletons";
-
+import { useNavigate } from "@tanstack/react-router";
 interface HomeFeaturedProps {
+  _id: any;
   id: string;
   name: string;
   description: string;
@@ -10,6 +11,7 @@ interface HomeFeaturedProps {
   category: string;
 }
 export function HomeFeatured() {
+  const navigate = useNavigate();
   const {
     data: threeCardBoards,
     isLoading,
@@ -66,7 +68,10 @@ export function HomeFeatured() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {threeCardBoards.data.map((game: HomeFeaturedProps) => (
             <div key={game.id} className="group cursor-target">
-              <div className="bg-black/40 backdrop-blur-sm border border-purple-500/50 p-6 transition-all hover:border-purple-400 hover:bg-black/60">
+              <div
+                onClick={() => navigate({ to: `/games/${game._id}` })}
+                className="bg-black/40 backdrop-blur-sm border border-purple-500/50 p-6 transition-all hover:border-purple-400 hover:bg-black/60"
+              >
                 <div className="aspect-square bg-gradient-to-br from-purple-900 to-purple-700 mb-4 border-2 border-white/30 flex items-center justify-center overflow-hidden">
                   <img
                     src={game.image}
