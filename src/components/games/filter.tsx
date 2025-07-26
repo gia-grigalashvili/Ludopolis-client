@@ -35,9 +35,10 @@ export default function Filter({ onFilterChange }: FilterProps) {
       </button>
 
       <aside
-        className={`fixed top-0 left-0 h-screen w-64 bg-[#1f1f2b]/80 text-gray-200 p-6 backdrop-blur-lg border-r border-white/10 transition-transform duration-300 z-40
+        className={`fixed top-0 left-0 bottom-0 w-64 bg-[#1f1f2b]/80 text-gray-200 p-6 backdrop-blur-lg border-r border-white/10 transition-transform duration-300 z-40 overflow-hidden flex flex-col
         ${isOpen ? "translate-x-0" : "-translate-x-full"}
-        md:translate-x-0 md:static md:block`}
+        md:translate-x-0 md:fixed md:z-30`}
+        style={{ height: '100vh' }}
       >
         <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
           Categories
@@ -53,7 +54,7 @@ export default function Filter({ onFilterChange }: FilterProps) {
           />
         </div>
 
-        <div className="space-y-2 overflow-y-auto max-h-[70vh] pr-1">
+        <div className="space-y-2 overflow-y-auto flex-1 pr-1">
           {filteredCategories?.map((cat: any, index: number) => (
             <div
               key={cat.id || cat._id || cat.name || index}

@@ -14,9 +14,9 @@ export default function Games() {
     <div>
       {" "}
       <Header />
-      <div className="flex flex-col md:flex-row gap-4 ">
+      <div className="flex flex-col md:flex-row gap-4 md:pl-64">
         <Filter onFilterChange={setSelectedCategories} />
-        <div className=" flex-1 p-4">
+        <div className="flex-1 p-4">
           <Search searchTerm={searchTerm} onSearchChange={setSearchTerm} />
           <AllGames
             selectedCategories={selectedCategories}
