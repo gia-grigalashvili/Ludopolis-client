@@ -2,12 +2,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Update from "../../../components/admin/Update";
+import Update from "../../../../components/admin/Update";
 import { useState } from "react";
 
-export const Route = createFileRoute("/_authenticated/Admin/updateProduct/$id")({
-  component: RouteComponent,
-});
+export const Route = createFileRoute("/_authenticated/Admin/updateProduct/$id")(
+  {
+    component: RouteComponent,
+  }
+);
 
 function RouteComponent() {
   const { id } = Route.useParams();

@@ -10,15 +10,14 @@ export default function Sidebar() {
   });
 
   const links = [
-    { to: "/product/", label: "➕ Add CardBoard" },
-    { to: "/product/month", label: "📅 Month" },
-    { to: "/product/all", label: "📚 All Blogs" },
-    { to: "/product/categories", label: "📚 All categories" },
+    { to: "/Admin", label: "➕ Add CardBoard" },
+    { to: "/Admin/month", label: "📅 Month" },
+    { to: "/Admin/all", label: "📚 All Blogs" },
+    { to: "/Admin/categories", label: "📚 All categories" },
   ];
 
   return (
     <>
- 
       <button
         className="md:hidden text-white p-4 z-40 fixed top-[88px] left-4"
         onClick={() => setIsOpen(!isOpen)}

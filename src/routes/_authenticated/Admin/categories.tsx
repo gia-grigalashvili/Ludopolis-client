@@ -1,4 +1,4 @@
-import Categories from "../../components/admin/Categories";
+import Categories from "../../../components/admin/Categories";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/Admin/categories")({

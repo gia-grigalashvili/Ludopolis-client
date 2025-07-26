@@ -179,7 +179,7 @@ export default function AllBoard() {
                       transition={{ duration: 0.2, delay: index * 0.05 }}
                       className="hover:bg-[#34344a] transition"
                       onClick={() =>
-                        navigate({ to: `/product/${row.original._id}` })
+                        navigate({ to: `/admin/${row.original._id}` })
                       }
                     >
                       {row.getVisibleCells().map((cell) => (

@@ -32,7 +32,7 @@ export default function SingleGame({
             onClick={(e) => {
               e.stopPropagation();
               navigate({
-                to: `/product/updateProduct/${Board.data._id}`,
+                to: `/admin/updateProduct/${Board.data._id}`,
               });
             }}
           >

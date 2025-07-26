@@ -1,13 +1,25 @@
-import Sidebar from "../../components/admin/Sidebar";
-import { createFileRoute } from "@tanstack/react-router";
-import { Outlet } from "@tanstack/react-router";
-import LetterGlitch from "../../components/ui/letter-Glitch";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import Sidebar from "@/components/admin/Sidebar";
+import LetterGlitch from "@/components/ui/letter-Glitch";
 import TargetCursor from "@/components/ui/target-cursor";
+import { Outlet } from "@tanstack/react-router";
+
 export const Route = createFileRoute("/_authenticated/Admin")({
-  component: BlogLayout,
+  beforeLoad: async ({ context }) => {
+    const user = await context.getCurrentUser().catch(() => null);
+
+    if (!user) {
+      throw redirect({ to: "/signin" });
+    }
+
+    if (user.role !== "admin") {
+      throw redirect({ to: "/" });
+    }
+  },
+  component: AdminLayout,
 });
 
-function BlogLayout() {
+function AdminLayout() {
   return (
     <div className="relative min-h-screen bg-[#0E0C15] mt-[80px] overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -19,9 +31,11 @@ function BlogLayout() {
           glitchColors={["#AD46FF", "#9C27B0", "#7E22CE"]}
         />
       </div>
+
       <TargetCursor spinDuration={2} hideDefaultCursor={true} />
 
       <div className="relative z-10 flex">
+        {/* გვერდითი მენიუ */}
         <div className="h-[100vh]">
           <Sidebar />
         </div>

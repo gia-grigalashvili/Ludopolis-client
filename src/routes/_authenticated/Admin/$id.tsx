@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { GetSingleBoard } from "../../services/product";
-import SingleGame from "../../components/admin/SingleGame";
+import { GetSingleBoard } from "../../../services/product";
+import SingleGame from "../../../components/admin/SingleGame";
 
 export const Route = createFileRoute("/_authenticated/Admin/$id")({
   component: RouteComponent,
