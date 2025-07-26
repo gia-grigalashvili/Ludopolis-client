@@ -5,7 +5,7 @@ import axios from "axios";
 import Update from "../../../components/admin/Update";
 import { useState } from "react";
 
-export const Route = createFileRoute("/product/updateProduct/$id")({
+export const Route = createFileRoute("/_authenticated/Admin/updateProduct/$id")({
   component: RouteComponent,
 });
 

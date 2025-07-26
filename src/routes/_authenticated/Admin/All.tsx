@@ -1,14 +1,15 @@
-import Categories from "../../components/admin/Categories";
+import AllBoard from "@/components/admin/AllBoard";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/product/categories")({
+export const Route = createFileRoute("/_authenticated/Admin/All")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   return (
     <div>
-      <Categories />
+      {" "}
+      <AllBoard />
     </div>
   );
 }

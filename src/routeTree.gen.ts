@@ -13,17 +13,17 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
-import { Route as ProductRouteRouteImport } from './routes/product/route'
 import { Route as GamesRouteRouteImport } from './routes/games/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ProductIndexRouteImport } from './routes/product/index'
 import { Route as GamesIndexRouteImport } from './routes/games/index'
-import { Route as ProductMonthRouteImport } from './routes/product/month'
-import { Route as ProductCategoriesRouteImport } from './routes/product/categories'
-import { Route as ProductAllRouteImport } from './routes/product/All'
-import { Route as ProductIdRouteImport } from './routes/product/$id'
 import { Route as GamesIdRouteImport } from './routes/games/$id'
-import { Route as ProductUpdateProductIdRouteImport } from './routes/product/updateProduct/$id'
+import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/Admin/route'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/Admin/index'
+import { Route as AuthenticatedAdminMonthRouteImport } from './routes/_authenticated/Admin/month'
+import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/Admin/categories'
+import { Route as AuthenticatedAdminAllRouteImport } from './routes/_authenticated/Admin/All'
+import { Route as AuthenticatedAdminIdRouteImport } from './routes/_authenticated/Admin/$id'
+import { Route as AuthenticatedAdminUpdateProductIdRouteImport } from './routes/_authenticated/Admin/updateProduct/$id'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -44,11 +44,6 @@ const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProductRouteRoute = ProductRouteRouteImport.update({
-  id: '/product',
-  path: '/product',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GamesRouteRoute = GamesRouteRouteImport.update({
   id: '/games',
   path: '/games',
@@ -59,62 +54,69 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProductIndexRoute = ProductIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ProductRouteRoute,
-} as any)
 const GamesIndexRoute = GamesIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => GamesRouteRoute,
-} as any)
-const ProductMonthRoute = ProductMonthRouteImport.update({
-  id: '/month',
-  path: '/month',
-  getParentRoute: () => ProductRouteRoute,
-} as any)
-const ProductCategoriesRoute = ProductCategoriesRouteImport.update({
-  id: '/categories',
-  path: '/categories',
-  getParentRoute: () => ProductRouteRoute,
-} as any)
-const ProductAllRoute = ProductAllRouteImport.update({
-  id: '/All',
-  path: '/All',
-  getParentRoute: () => ProductRouteRoute,
-} as any)
-const ProductIdRoute = ProductIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ProductRouteRoute,
 } as any)
 const GamesIdRoute = GamesIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => GamesRouteRoute,
 } as any)
-const ProductUpdateProductIdRoute = ProductUpdateProductIdRouteImport.update({
-  id: '/updateProduct/$id',
-  path: '/updateProduct/$id',
-  getParentRoute: () => ProductRouteRoute,
+const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
+  id: '/Admin',
+  path: '/Admin',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminMonthRoute = AuthenticatedAdminMonthRouteImport.update({
+  id: '/month',
+  path: '/month',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminCategoriesRoute =
+  AuthenticatedAdminCategoriesRouteImport.update({
+    id: '/categories',
+    path: '/categories',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminAllRoute = AuthenticatedAdminAllRouteImport.update({
+  id: '/All',
+  path: '/All',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminIdRoute = AuthenticatedAdminIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminUpdateProductIdRoute =
+  AuthenticatedAdminUpdateProductIdRouteImport.update({
+    id: '/updateProduct/$id',
+    path: '/updateProduct/$id',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/games': typeof GamesRouteRouteWithChildren
-  '/product': typeof ProductRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/Admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/games/$id': typeof GamesIdRoute
-  '/product/$id': typeof ProductIdRoute
-  '/product/All': typeof ProductAllRoute
-  '/product/categories': typeof ProductCategoriesRoute
-  '/product/month': typeof ProductMonthRoute
   '/games/': typeof GamesIndexRoute
-  '/product/': typeof ProductIndexRoute
-  '/product/updateProduct/$id': typeof ProductUpdateProductIdRoute
+  '/Admin/$id': typeof AuthenticatedAdminIdRoute
+  '/Admin/All': typeof AuthenticatedAdminAllRoute
+  '/Admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/Admin/month': typeof AuthenticatedAdminMonthRoute
+  '/Admin/': typeof AuthenticatedAdminIndexRoute
+  '/Admin/updateProduct/$id': typeof AuthenticatedAdminUpdateProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -122,49 +124,49 @@ export interface FileRoutesByTo {
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/games/$id': typeof GamesIdRoute
-  '/product/$id': typeof ProductIdRoute
-  '/product/All': typeof ProductAllRoute
-  '/product/categories': typeof ProductCategoriesRoute
-  '/product/month': typeof ProductMonthRoute
   '/games': typeof GamesIndexRoute
-  '/product': typeof ProductIndexRoute
-  '/product/updateProduct/$id': typeof ProductUpdateProductIdRoute
+  '/Admin/$id': typeof AuthenticatedAdminIdRoute
+  '/Admin/All': typeof AuthenticatedAdminAllRoute
+  '/Admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/Admin/month': typeof AuthenticatedAdminMonthRoute
+  '/Admin': typeof AuthenticatedAdminIndexRoute
+  '/Admin/updateProduct/$id': typeof AuthenticatedAdminUpdateProductIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/games': typeof GamesRouteRouteWithChildren
-  '/product': typeof ProductRouteRouteWithChildren
-  '/_authenticated': typeof AuthenticatedRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/about': typeof AboutRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/_authenticated/Admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/games/$id': typeof GamesIdRoute
-  '/product/$id': typeof ProductIdRoute
-  '/product/All': typeof ProductAllRoute
-  '/product/categories': typeof ProductCategoriesRoute
-  '/product/month': typeof ProductMonthRoute
   '/games/': typeof GamesIndexRoute
-  '/product/': typeof ProductIndexRoute
-  '/product/updateProduct/$id': typeof ProductUpdateProductIdRoute
+  '/_authenticated/Admin/$id': typeof AuthenticatedAdminIdRoute
+  '/_authenticated/Admin/All': typeof AuthenticatedAdminAllRoute
+  '/_authenticated/Admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/_authenticated/Admin/month': typeof AuthenticatedAdminMonthRoute
+  '/_authenticated/Admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/Admin/updateProduct/$id': typeof AuthenticatedAdminUpdateProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/games'
-    | '/product'
     | '/about'
     | '/signin'
     | '/signup'
+    | '/Admin'
     | '/games/$id'
-    | '/product/$id'
-    | '/product/All'
-    | '/product/categories'
-    | '/product/month'
     | '/games/'
-    | '/product/'
-    | '/product/updateProduct/$id'
+    | '/Admin/$id'
+    | '/Admin/All'
+    | '/Admin/categories'
+    | '/Admin/month'
+    | '/Admin/'
+    | '/Admin/updateProduct/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -172,37 +174,36 @@ export interface FileRouteTypes {
     | '/signin'
     | '/signup'
     | '/games/$id'
-    | '/product/$id'
-    | '/product/All'
-    | '/product/categories'
-    | '/product/month'
     | '/games'
-    | '/product'
-    | '/product/updateProduct/$id'
+    | '/Admin/$id'
+    | '/Admin/All'
+    | '/Admin/categories'
+    | '/Admin/month'
+    | '/Admin'
+    | '/Admin/updateProduct/$id'
   id:
     | '__root__'
     | '/'
     | '/games'
-    | '/product'
     | '/_authenticated'
     | '/about'
     | '/signin'
     | '/signup'
+    | '/_authenticated/Admin'
     | '/games/$id'
-    | '/product/$id'
-    | '/product/All'
-    | '/product/categories'
-    | '/product/month'
     | '/games/'
-    | '/product/'
-    | '/product/updateProduct/$id'
+    | '/_authenticated/Admin/$id'
+    | '/_authenticated/Admin/All'
+    | '/_authenticated/Admin/categories'
+    | '/_authenticated/Admin/month'
+    | '/_authenticated/Admin/'
+    | '/_authenticated/Admin/updateProduct/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GamesRouteRoute: typeof GamesRouteRouteWithChildren
-  ProductRouteRoute: typeof ProductRouteRouteWithChildren
-  AuthenticatedRoute: typeof AuthenticatedRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AboutRoute: typeof AboutRoute
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
@@ -238,13 +239,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/product': {
-      id: '/product'
-      path: '/product'
-      fullPath: '/product'
-      preLoaderRoute: typeof ProductRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/games': {
       id: '/games'
       path: '/games'
@@ -259,47 +253,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/product/': {
-      id: '/product/'
-      path: '/'
-      fullPath: '/product/'
-      preLoaderRoute: typeof ProductIndexRouteImport
-      parentRoute: typeof ProductRouteRoute
-    }
     '/games/': {
       id: '/games/'
       path: '/'
       fullPath: '/games/'
       preLoaderRoute: typeof GamesIndexRouteImport
       parentRoute: typeof GamesRouteRoute
-    }
-    '/product/month': {
-      id: '/product/month'
-      path: '/month'
-      fullPath: '/product/month'
-      preLoaderRoute: typeof ProductMonthRouteImport
-      parentRoute: typeof ProductRouteRoute
-    }
-    '/product/categories': {
-      id: '/product/categories'
-      path: '/categories'
-      fullPath: '/product/categories'
-      preLoaderRoute: typeof ProductCategoriesRouteImport
-      parentRoute: typeof ProductRouteRoute
-    }
-    '/product/All': {
-      id: '/product/All'
-      path: '/All'
-      fullPath: '/product/All'
-      preLoaderRoute: typeof ProductAllRouteImport
-      parentRoute: typeof ProductRouteRoute
-    }
-    '/product/$id': {
-      id: '/product/$id'
-      path: '/$id'
-      fullPath: '/product/$id'
-      preLoaderRoute: typeof ProductIdRouteImport
-      parentRoute: typeof ProductRouteRoute
     }
     '/games/$id': {
       id: '/games/$id'
@@ -308,12 +267,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GamesIdRouteImport
       parentRoute: typeof GamesRouteRoute
     }
-    '/product/updateProduct/$id': {
-      id: '/product/updateProduct/$id'
+    '/_authenticated/Admin': {
+      id: '/_authenticated/Admin'
+      path: '/Admin'
+      fullPath: '/Admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/Admin/': {
+      id: '/_authenticated/Admin/'
+      path: '/'
+      fullPath: '/Admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/Admin/month': {
+      id: '/_authenticated/Admin/month'
+      path: '/month'
+      fullPath: '/Admin/month'
+      preLoaderRoute: typeof AuthenticatedAdminMonthRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/Admin/categories': {
+      id: '/_authenticated/Admin/categories'
+      path: '/categories'
+      fullPath: '/Admin/categories'
+      preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/Admin/All': {
+      id: '/_authenticated/Admin/All'
+      path: '/All'
+      fullPath: '/Admin/All'
+      preLoaderRoute: typeof AuthenticatedAdminAllRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/Admin/$id': {
+      id: '/_authenticated/Admin/$id'
+      path: '/$id'
+      fullPath: '/Admin/$id'
+      preLoaderRoute: typeof AuthenticatedAdminIdRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/Admin/updateProduct/$id': {
+      id: '/_authenticated/Admin/updateProduct/$id'
       path: '/updateProduct/$id'
-      fullPath: '/product/updateProduct/$id'
-      preLoaderRoute: typeof ProductUpdateProductIdRouteImport
-      parentRoute: typeof ProductRouteRoute
+      fullPath: '/Admin/updateProduct/$id'
+      preLoaderRoute: typeof AuthenticatedAdminUpdateProductIdRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
   }
 }
@@ -332,33 +333,47 @@ const GamesRouteRouteWithChildren = GamesRouteRoute._addFileChildren(
   GamesRouteRouteChildren,
 )
 
-interface ProductRouteRouteChildren {
-  ProductIdRoute: typeof ProductIdRoute
-  ProductAllRoute: typeof ProductAllRoute
-  ProductCategoriesRoute: typeof ProductCategoriesRoute
-  ProductMonthRoute: typeof ProductMonthRoute
-  ProductIndexRoute: typeof ProductIndexRoute
-  ProductUpdateProductIdRoute: typeof ProductUpdateProductIdRoute
+interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminIdRoute: typeof AuthenticatedAdminIdRoute
+  AuthenticatedAdminAllRoute: typeof AuthenticatedAdminAllRoute
+  AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
+  AuthenticatedAdminMonthRoute: typeof AuthenticatedAdminMonthRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminUpdateProductIdRoute: typeof AuthenticatedAdminUpdateProductIdRoute
 }
 
-const ProductRouteRouteChildren: ProductRouteRouteChildren = {
-  ProductIdRoute: ProductIdRoute,
-  ProductAllRoute: ProductAllRoute,
-  ProductCategoriesRoute: ProductCategoriesRoute,
-  ProductMonthRoute: ProductMonthRoute,
-  ProductIndexRoute: ProductIndexRoute,
-  ProductUpdateProductIdRoute: ProductUpdateProductIdRoute,
+const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
+  {
+    AuthenticatedAdminIdRoute: AuthenticatedAdminIdRoute,
+    AuthenticatedAdminAllRoute: AuthenticatedAdminAllRoute,
+    AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
+    AuthenticatedAdminMonthRoute: AuthenticatedAdminMonthRoute,
+    AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+    AuthenticatedAdminUpdateProductIdRoute:
+      AuthenticatedAdminUpdateProductIdRoute,
+  }
+
+const AuthenticatedAdminRouteRouteWithChildren =
+  AuthenticatedAdminRouteRoute._addFileChildren(
+    AuthenticatedAdminRouteRouteChildren,
+  )
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
 }
 
-const ProductRouteRouteWithChildren = ProductRouteRoute._addFileChildren(
-  ProductRouteRouteChildren,
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GamesRouteRoute: GamesRouteRouteWithChildren,
-  ProductRouteRoute: ProductRouteRouteWithChildren,
-  AuthenticatedRoute: AuthenticatedRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AboutRoute: AboutRoute,
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,

@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Outlet } from "@tanstack/react-router";
 import LetterGlitch from "../../components/ui/letter-Glitch";
 import TargetCursor from "@/components/ui/target-cursor";
-export const Route = createFileRoute("/product")({
+export const Route = createFileRoute("/_authenticated/Admin")({
   component: BlogLayout,
 });
 

@@ -1,7 +1,7 @@
 import Month from "../../components/admin/Month";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/product/month")({
+export const Route = createFileRoute("/_authenticated/Admin/month")({
   component: RouteComponent,
 });
 
