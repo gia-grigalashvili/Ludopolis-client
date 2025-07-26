@@ -10,8 +10,8 @@ export const Route = createFileRoute("/games")({
 
 function BlogLayout() {
   return (
-    <div className="relative min-h-screen">
-      <div className="absolute inset-0 z-0">
+    <div className="relative min-h-screen overflow-x-hidden">
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <Particles
           particleColors={["#7E22CE", "#7E22CE"]}
           particleCount={200}
@@ -27,8 +27,8 @@ function BlogLayout() {
       <TargetCursor spinDuration={2} hideDefaultCursor={true} />
 
       {/* Content on top */}
-      <div className="relative z-10 flex">
-        <main className="ml-0 text-white w-full">
+      <div className="relative z-10 w-full min-w-0">
+        <main className="w-full min-w-0 text-white">
           <Outlet />
         </main>
       </div>
