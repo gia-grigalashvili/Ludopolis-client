@@ -39,7 +39,7 @@ export default function AllBoard() {
   const navigate = useNavigate();
   const rawData = data?.data ?? [];
   const deleteMutation = UseDeleteBoard();
-  console.log(data);
+
   const handleDelete = (board: Board) => {
     deleteMutation.mutate(board._id, {
       onSuccess: () => {

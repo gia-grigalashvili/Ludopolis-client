@@ -3,7 +3,9 @@ import { useState } from "react";
 import TableFooter from "../admin/TableFooter";
 import GameCardSkeleton from "./skeleton/GameCardSkeleton";
 import { useNavigate } from "@tanstack/react-router";
-
+import { useAddToCart } from "../../hooks/useAddToCart";
+import { useGetMe } from "../../hooks/useGetMe";
+import { ShoppingCart } from "lucide-react";
 
 interface AllGamesProps {
   selectedCategories: string[];
@@ -16,9 +18,12 @@ export default function AllGames({
 }: AllGamesProps) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
   const { data, isLoading, isError, error } = UseGetBoardPaginated(currentPage);
+  const { data: user, isLoading: isUserLoading } = useGetMe();
+  const { mutate: addToCart, isPending: isAddingToCart } = useAddToCart();
 
-  if (isLoading) return <GameCardSkeleton />;
+  if (isLoading || isUserLoading) return <GameCardSkeleton />;
   if (isError)
     return <p className="text-center text-red-500">Error: {error.message}</p>;
 
@@ -38,9 +43,26 @@ export default function AllGames({
     }
   );
 
+  const handleQuantityChange = (itemId: string, change: number) => {
+    setQuantities((prev) => {
+      const currentQuantity = prev[itemId] || 1;
+      const newQuantity = Math.max(1, currentQuantity + change);
+      return { ...prev, [itemId]: newQuantity };
+    });
+  };
+
+  const handleAddToCart = (item: any) => {
+    const quantity = quantities[item._id] || 1;
+    addToCart({
+      userId: user.user.id,
+      productId: item._id,
+      quantity,
+    });
+    setQuantities({});
+  };
+
   return (
     <div>
-     
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredItems.map((item: any) => (
           <div key={item.id} className="group">
@@ -69,9 +91,39 @@ export default function AllGames({
                 <span className="text-gray-100 text-xl font-bold">
                   ${item.price}
                 </span>
-                <button className="  bg-transparent hover:bg-purple-600 border-1 text-white px-4 py-2 rounded-md text-sm font-semibold transition">
-                  ADD TO CART
-                </button>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center bg-gray-700 rounded-md">
+                    <button
+                      onClick={() => handleQuantityChange(item._id, -1)}
+                      className="px-2 py-1 text-white hover:bg-gray-600 rounded-l-md transition"
+                      disabled={
+                        quantities[item._id] === 1 || !quantities[item._id]
+                      }
+                    >
+                      -
+                    </button>
+                    <span className="px-3 py-1 text-white bg-gray-800 min-w-[40px] text-center">
+                      {quantities[item._id] || 1}
+                    </span>
+                    <button
+                      onClick={() => handleQuantityChange(item._id, 1)}
+                      className="px-2 py-1 text-white hover:bg-gray-600 rounded-r-md transition"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <button
+                    onClick={() => handleAddToCart(item)}
+                    disabled={isAddingToCart}
+                    className="bg-transparent hover:bg-purple-600 border border-purple-400 text-white px-4 py-2 rounded-md text-sm font-semibold transition disabled:opacity-50"
+                  >
+                    {isAddingToCart ? (
+                      "ADDING..."
+                    ) : (
+                      <ShoppingCart className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

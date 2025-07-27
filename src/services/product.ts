@@ -55,7 +55,6 @@ export const getBoardPaginated = async (
 };
 export const GetSingleBoard = async (id: string | number) => {
   const response = await instance.get(`/cardboards/${id}`);
-  console.log("PRgia:", response.data);
   if (!response) {
     throw new Error("Failed to fetch the cardboards");
   }

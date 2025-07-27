@@ -18,7 +18,7 @@ export function HomeFeatured() {
     isError,
     error,
   } = useGetThreeCard();
-  console.log(threeCardBoards);
+  
   if (isLoading) {
     return <FeaturedSkeletons />;
   }
@@ -67,7 +67,7 @@ export function HomeFeatured() {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {threeCardBoards.data.map((game: HomeFeaturedProps) => (
-            <div key={game.id} className="group cursor-target">
+            <div key={game._id} className="group cursor-target">
               <div
                 onClick={() => navigate({ to: `/games/${game._id}` })}
                 className="bg-black/40 backdrop-blur-sm border border-purple-500/50 p-6 transition-all hover:border-purple-400 hover:bg-black/60"
@@ -85,16 +85,14 @@ export function HomeFeatured() {
                 <p className="text-sm text-purple-400 mb-2 font-medium">
                   {game.category}
                 </p>
-                <p className="text-purple-300 mb-4 text-sm line-clamp-2">
-                  {game.description}
-                </p>
+                <div 
+                  className="text-purple-300 mb-4 text-sm line-clamp-2"
+                  dangerouslySetInnerHTML={{ __html: game.description }}
+                />
                 <div className="flex justify-between items-center">
                   <span className="text-2xl font-bold text-white">
                     ${game.price}
                   </span>
-                  <button className="cursor-target px-4 py-2 bg-purple-600 hover:bg-purple-700 border border-white/50 text-sm font-bold transition-colors">
-                    ADD TO CART
-                  </button>
                 </div>
               </div>
             </div>
