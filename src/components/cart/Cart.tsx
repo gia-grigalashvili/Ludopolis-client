@@ -1,64 +1,64 @@
-import { useGetCart } from "../../hooks/useGetCart";
-import { useUpdateCart } from "../../hooks/useUpdateCart";
-import { useRemoveFromCart } from "../../hooks/useRemoveFromCart";
-import { useGetMe } from "../../hooks/useGetMe";
-import { Minus, Plus, Trash2 } from "lucide-react";
-
+// import { useGetCart } from "../../hooks/useGetCart";
+// import { useUpdateCart } from "../../hooks/useUpdateCart";
+// import { useRemoveFromCart } from "../../hooks/useRemoveFromCart";
+// import { useGetMe } from "../../hooks/useGetMe";
+// import { Minus, Plus, Trash2 } from "lucide-react";
+// import { useNavigate } from "@tanstack/react-router";
 export function Cart() {
-  const { data: user } = useGetMe();
-  const userId = user?.user?.id;
-  const { data: cartData, isLoading } = useGetCart(userId);
-  const { mutate: updateCart } = useUpdateCart();
-  const { mutate: removeFromCart } = useRemoveFromCart();
+  // const { data: user } = useGetMe();
+  // const userId = user?.user?.id;
+  // const { data: cartData, isLoading } = useGetCart(userId);
+  // const { mutate: updateCart } = useUpdateCart();
+  // const { mutate: removeFromCart } = useRemoveFromCart();
 
-  const handleQuantityChange = (productId: string, newQuantity: number) => {
-    if (newQuantity < 1) return;
-    updateCart({ userId: userId!, productId, quantity: newQuantity });
-  };
+  // const handleQuantityChange = (productId: string, newQuantity: number) => {
+  //   if (newQuantity < 1) return;
+  //   updateCart({ userId: userId!, productId, quantity: newQuantity });
+  // };
+  // const navigate = useNavigate();
+  // const handleRemoveItem = (productId: string) => {
+  //   removeFromCart({ userId: userId!, productId });
+  // };
 
-  const handleRemoveItem = (productId: string) => {
-    removeFromCart({ userId: userId!, productId });
-  };
+  // if (isLoading) {
+  //   return (
+  //     <div className="p-4">
+  //       <div className="animate-pulse space-y-4">
+  //         {[1, 2, 3].map((i) => (
+  //           <div key={i} className="h-20 bg-gray-700 rounded"></div>
+  //         ))}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
-  if (isLoading) {
-    return (
-      <div className="p-4">
-        <div className="animate-pulse space-y-4">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="h-20 bg-gray-700 rounded"></div>
-          ))}
-        </div>
-      </div>
-    );
-  }
+  // const cartItems = cartData?.items || [];
+  // const total = cartItems.reduce(
+  //   (sum: number, item: any) => sum + item.product.price * item.quantity,
+  //   0
+  // );
 
-  const cartItems = cartData?.items || [];
-  const total = cartItems.reduce(
-    (sum: number, item: any) => sum + item.product.price * item.quantity,
-    0
-  );
-
-  if (cartItems.length === 0) {
-    return (
-      <div className="p-6 text-center">
-        <div className="text-gray-400 mb-4">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-700 flex items-center justify-center">
-            🛒
-          </div>
-          <h3 className="text-lg font-semibold text-gray-300 mb-2">
-            Your cart is empty
-          </h3>
-          <p className="text-sm text-gray-500">
-            Add some games to get started!
-          </p>
-        </div>
-      </div>
-    );
-  }
+  // if (cartItems.length === 0) {
+  //   return (
+  //     <div className="p-6 text-center">
+  //       <div className="text-gray-400 mb-4">
+  //         <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-700 flex items-center justify-center">
+  //           🛒
+  //         </div>
+  //         <h3 className="text-lg font-semibold text-gray-300 mb-2">
+  //           Your cart is empty
+  //         </h3>
+  //         <p className="text-sm text-gray-500">
+  //           Add some games to get started!
+  //         </p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-y-auto">
+      {/* <div className="flex-1 overflow-y-auto">
         <div className="p-4 space-y-4">
           {cartItems.map((item: any) => (
             <div
@@ -113,19 +113,22 @@ export function Cart() {
           ))}
         </div>
       </div>
-      
+
       {/* Cart Footer */}
-      <div className="border-t border-gray-700 p-4 space-y-4">
+      {/* <div className="border-t border-gray-700 p-4 space-y-4">
         <div className="flex justify-between items-center">
           <span className="text-lg font-semibold text-white">Total:</span>
           <span className="text-xl font-bold text-purple-300">
             ${total.toFixed(2)}
           </span>
         </div>
-        <button className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-lg transition">
+        <button
+          onClick={() => navigate({ to: "/checkout" })}
+          className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-lg transition"
+        >
           Proceed to Checkout
         </button>
-      </div>
+      </div>  */}
     </div>
   );
-} 
+}

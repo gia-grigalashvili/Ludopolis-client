@@ -10,7 +10,7 @@ import type { Cart } from "@/types/cart";
 import { useUpdateCart } from "@/hooks/useUpdateCart";
 import { useRemoveFromCart } from "@/hooks/useRemoveFromCart";
 import { useGetMe } from "@/hooks/useGetMe";
-
+import { useNavigate } from "@tanstack/react-router";
 interface CartSheetProps {
   cart?: Cart;
 }
@@ -22,11 +22,11 @@ export function CartSheet({ cart }: CartSheetProps) {
   const calculateTotal = () => {
     if (!cart?.items) return 0;
     return cart.items.reduce(
-      (total, item) => total + (item.productId.price * item.quantity),
+      (total, item) => total + item.productId.price * item.quantity,
       0
     );
   };
-
+  const navigate = useNavigate();
   const handleQuantityChange = (productId: string, newQuantity: number) => {
     if (!user?.user?.id || newQuantity < 1) return;
     updateCart({
@@ -56,18 +56,23 @@ export function CartSheet({ cart }: CartSheetProps) {
           )}
         </button>
       </SheetTrigger>
-      
+
       <SheetContent className="bg-[#1f1f31] border-purple-500/30 text-white flex flex-col h-full">
         <SheetHeader className="px-6 py-4 border-b border-gray-700">
-          <SheetTitle className="text-white text-xl font-bold">Shopping Cart</SheetTitle>
+          <SheetTitle className="text-white text-xl font-bold">
+            Shopping Cart
+          </SheetTitle>
         </SheetHeader>
-        
+
         <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
           {cart?.items && cart.items.length > 0 ? (
             <div className="p-4">
               <div className="space-y-3">
                 {cart.items.map((item) => (
-                  <div key={item._id} className="flex items-start space-x-3 bg-gray-800/50 rounded-lg p-3 border border-gray-700/50 hover:bg-gray-800/70 transition-colors">
+                  <div
+                    key={item._id}
+                    className="flex items-start space-x-3 bg-gray-800/50 rounded-lg p-3 border border-gray-700/50 hover:bg-gray-800/70 transition-colors"
+                  >
                     <img
                       src={item.productId.image}
                       alt={item.productId.name}
@@ -86,12 +91,17 @@ export function CartSheet({ cart }: CartSheetProps) {
                             ${(item.productId.price * item.quantity).toFixed(2)}
                           </p>
                         </div>
-                        
+
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-2">
                             <div className="flex items-center bg-gray-700 rounded-md">
                               <button
-                                onClick={() => handleQuantityChange(item.productId._id, item.quantity - 1)}
+                                onClick={() =>
+                                  handleQuantityChange(
+                                    item.productId._id,
+                                    item.quantity - 1
+                                  )
+                                }
                                 className="p-1 text-white hover:bg-gray-600 rounded-l-md transition disabled:opacity-50"
                                 disabled={item.quantity === 1 || isUpdating}
                               >
@@ -101,7 +111,12 @@ export function CartSheet({ cart }: CartSheetProps) {
                                 {item.quantity}
                               </span>
                               <button
-                                onClick={() => handleQuantityChange(item.productId._id, item.quantity + 1)}
+                                onClick={() =>
+                                  handleQuantityChange(
+                                    item.productId._id,
+                                    item.quantity + 1
+                                  )
+                                }
                                 className="p-1 text-white hover:bg-gray-600 rounded-r-md transition disabled:opacity-50"
                                 disabled={isUpdating}
                               >
@@ -109,7 +124,7 @@ export function CartSheet({ cart }: CartSheetProps) {
                               </button>
                             </div>
                           </div>
-                          
+
                           <button
                             onClick={() => handleRemoveItem(item.productId._id)}
                             className="p-1.5 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-md transition disabled:opacity-50"
@@ -141,7 +156,8 @@ export function CartSheet({ cart }: CartSheetProps) {
                   Your cart is empty
                 </h3>
                 <p className="text-sm text-gray-500 leading-relaxed">
-                  Add some amazing games to get started!<br/>
+                  Add some amazing games to get started!
+                  <br />
                   Browse our collection and find your next favorite.
                 </p>
               </div>
@@ -163,7 +179,10 @@ export function CartSheet({ cart }: CartSheetProps) {
                 ${calculateTotal().toFixed(2)}
               </span>
             </div>
-            <button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-purple-500/25 transform hover:scale-[1.02]">
+            <button
+              onClick={() => navigate({ to: "/checkout" })}
+              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-purple-500/25 transform hover:scale-[1.02]"
+            >
               Proceed to Checkout
             </button>
           </div>

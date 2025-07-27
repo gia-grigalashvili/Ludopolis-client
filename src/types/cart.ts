@@ -11,6 +11,7 @@ export interface Product {
 }
 
 export interface CartItem {
+  [x: string]: any;
   _id: string;
   userId: string;
   productId: Product;
