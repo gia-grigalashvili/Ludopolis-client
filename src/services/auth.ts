@@ -17,7 +17,7 @@ export const Register = async ({
     });
     return response.data;
   } catch (error) {
-    console.log(error);
+    throw new Error(error as string);
   }
 };
 
@@ -35,7 +35,7 @@ export const Login = async ({
     });
     return response.data;
   } catch (error) {
-    console.log(error);
+    throw new Error(error as string);
   }
 };
 export const getCurrentUser = async (): Promise<{
@@ -61,7 +61,7 @@ export const logout = async () => {
     const response = await instance.post("/auth/logout");
     return response.data;
   } catch (error) {
-    console.log(error);
+    throw new Error(error as string);
   }
 };
 

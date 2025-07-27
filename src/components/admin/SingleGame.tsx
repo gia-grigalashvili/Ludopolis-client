@@ -12,7 +12,7 @@ export default function SingleGame({
 }) {
   const [isModalDelete, setIsModalDelete] = useState(false);
   const navigate = useNavigate();
-  console.log(Board);
+
   const { mutate } = UseDeleteBoard();
   const handleDelete = () => {
     mutate(Board.data._id, {
@@ -22,7 +22,7 @@ export default function SingleGame({
       },
     });
   };
-  console.log(Board);
+
   return (
     <div>
       <div className="max-w-3xl mx-auto p-6 bg-[#1f1f2b] text-white rounded-xl shadow-lg relative">

@@ -34,7 +34,7 @@ export function HomeCategories() {
         </div>
       </section>
     );
-  console.log(categories);
+
 
   const categoriesArray = Array.isArray(categories) ? categories : [];
 

@@ -1,16 +1,20 @@
-import { User, LogOut, ShoppingCart, LogIn } from "lucide-react";
+import { User, LogOut, LogIn } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useLogout } from "@/hooks/useLogout";
 import { Link } from "@tanstack/react-router";
 import { useGetMe } from "@/hooks/useGetMe";
 import { HomeCatSkeletons } from "./home/skeletons/home-cat-skeletons";
 
+import { useGetCart } from "@/hooks/useGetCart";
+import { CartSheet } from "./cart/cart-sheet";
+
 export function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { mutate: logout, isPending } = useLogout();
   const { data: me, isLoading } = useGetMe();
-  console.log(me);
+  const { data: cartData, isLoading: isCartLoading } = useGetCart(me?.user?.id);
+
 
   const links = [
     { name: "Home", path: "/" },
@@ -43,7 +47,7 @@ export function Header() {
     setIsDropdownOpen(false);
   };
 
-  if (isLoading) return <HomeCatSkeletons />
+  if (isLoading || isCartLoading) return <HomeCatSkeletons />;
 
   return (
     <header className="p-6 border-b border-purple-500/30 backdrop-blur-sm bg-black/20">
@@ -66,9 +70,8 @@ export function Header() {
               {link.name}
             </Link>
           ))}
-          <span className="cursor-target hover:text-purple-300 transition-colors">
-            <ShoppingCart className="w-6 h-6" />
-          </span>
+
+          <CartSheet cart={cartData} />
 
           <div className="relative" ref={dropdownRef}>
             <button

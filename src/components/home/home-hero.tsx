@@ -1,8 +1,6 @@
 import SplitText from "../ui/spllit-text";
 
-const handleAnimationComplete = () => {
-  console.log("Title animation complete!");
-};
+
 
 export function HomeHero() {
   return (
@@ -21,7 +19,6 @@ export function HomeHero() {
             threshold={0.1}
             rootMargin="-100px"
             textAlign="center"
-            onLetterAnimationComplete={handleAnimationComplete}
           />
         </div>
         <p className="text-xl md:text-2xl mb-8 text-purple-200 max-w-2xl mx-auto">
