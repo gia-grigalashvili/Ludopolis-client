@@ -65,4 +65,13 @@ export const logout = async () => {
   }
 };
 
+export const getMe = async () => {
+  try {
+    const response = await instance.get("/auth/me");
+    return response.data;
+  } catch (error) {
+    throw new Error(error as string);
+  }
+};
+
 export type User = Awaited<ReturnType<typeof getCurrentUser>>;

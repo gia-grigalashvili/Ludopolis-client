@@ -67,7 +67,7 @@ export function HomeFeatured() {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {threeCardBoards.data.map((game: HomeFeaturedProps) => (
-            <div key={game.id} className="group cursor-target">
+            <div key={game._id} className="group cursor-target">
               <div
                 onClick={() => navigate({ to: `/games/${game._id}` })}
                 className="bg-black/40 backdrop-blur-sm border border-purple-500/50 p-6 transition-all hover:border-purple-400 hover:bg-black/60"
