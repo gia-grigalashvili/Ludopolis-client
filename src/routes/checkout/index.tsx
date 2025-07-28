@@ -1,5 +1,5 @@
 // import Particles from "@/components/ui/Particles";
-import Checkout from "../../components/checkout/checkout";
+import Checkout from "../../components/checkout/Checkout";
 import { createFileRoute } from "@tanstack/react-router";
 import TargetCursor from "@/components/ui/target-cursor";
 import { Header } from "../../components/header";
