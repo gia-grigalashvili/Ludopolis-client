@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import Sidebar from "@/components/admin/Sidebar";
-import LetterGlitch from "@/components/ui/letter-Glitch";
 import TargetCursor from "@/components/ui/target-cursor";
+import DarkVeil from "@/components/ui/dark-veil";
 import { Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/Admin")({
@@ -21,14 +21,15 @@ export const Route = createFileRoute("/_authenticated/Admin")({
 
 function AdminLayout() {
   return (
-    <div className="relative min-h-screen bg-[#0E0C15] mt-[80px] overflow-hidden">
+    <div className="relative min-h-screen bg-[#0E0C15] overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <LetterGlitch
-          glitchSpeed={50}
-          centerVignette={true}
-          outerVignette={false}
-          smooth={true}
-          glitchColors={["#AD46FF", "#9C27B0", "#7E22CE"]}
+        <DarkVeil
+          hueShift={290}
+          noiseIntensity={0.15}
+          scanlineIntensity={0.25}
+          speed={1.2}
+          scanlineFrequency={2.5}
+          warpAmount={0.08}
         />
       </div>
 

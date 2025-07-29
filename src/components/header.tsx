@@ -82,8 +82,8 @@ export function Header() {
             </button>
 
             {isDropdownOpen && (
-              <div className="absolute right-0 top-full mt-2 w-48 bg-black/90 backdrop-blur-sm border border-purple-500/30 rounded-lg shadow-lg z-50">
-                {me?.user ? (
+              <div className="absolute right-0  top-full mt-2 w-48 bg-black/90 backdrop-blur-sm border border-purple-500/30 rounded-lg shadow-lg z-50">
+                {me?.user ? ( 
                   <button
                     onClick={handleLogout}
                     className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-purple-500/20 transition-colors text-purple-100 hover:text-white"

@@ -1,6 +1,7 @@
 import { UseGetCategories } from "@/hooks/UseGetCategories";
 import { Gamepad2, Dice1, Users, Trophy } from "lucide-react";
 import { HomeCatSkeletons } from "./skeletons/home-cat-skeletons";
+import { Link } from "@tanstack/react-router";
 
 interface Category {
   id: string;
@@ -35,7 +36,6 @@ export function HomeCategories() {
       </section>
     );
 
-
   const categoriesArray = Array.isArray(categories) ? categories : [];
 
   return (
@@ -49,8 +49,9 @@ export function HomeCategories() {
             const IconComponent = staticIcons[index % 4];
 
             return (
-              <div
+              <Link
                 key={`${category.id}-${index}`}
+                to={`/games`}
                 className="group cursor-pointer cursor-target"
               >
                 <div className="bg-black/30 backdrop-blur-sm border-2 border-purple-500/50 p-6 text-center transition-all hover:border-purple-400 hover:bg-purple-600/20">
@@ -59,7 +60,7 @@ export function HomeCategories() {
                   </div>
                   <h4 className="font-bold text-purple-100">{category.name}</h4>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

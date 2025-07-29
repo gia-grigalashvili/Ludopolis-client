@@ -31,6 +31,8 @@ export const UseUpdateBoard = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["Cardboards"] });
+      queryClient.invalidateQueries({ queryKey: ["Boards"] });
+      toast.success("Cardboard updated successfully");
     },
 
     onError: (error: any) => {

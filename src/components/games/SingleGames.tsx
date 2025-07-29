@@ -1,8 +1,11 @@
 import { Footer } from "../footer";
 import { Header } from "../header";
 import { UseGetBoard } from "@/hooks/UseGetBoard";
+import { useAddToCart } from "@/hooks/useAddToCart";
+import { useGetMe } from "@/hooks/useGetMe";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import "swiper/css";
 import CarouselSkeelton from "./skeleton/CarouselSkeelton";
 import CarouselError from "./skeleton/CarouselError";
@@ -18,11 +21,14 @@ interface SingleGamesProps {
   };
 }
 
-
 export default function SingleGames({ board }: SingleGamesProps) {
   const { data: boardData, isLoading, isError, error } = UseGetBoard();
+  const { data: user, isLoading: isUserLoading } = useGetMe();
+  const { mutate: addToCart, isPending: isAddingToCart } = useAddToCart();
+  const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
-  if (isLoading) return <CarouselSkeelton />;
+
+  if (isLoading || isUserLoading) return <CarouselSkeelton />;
   if (isError) return <CarouselError error={error} />;
 
   const relatedProducts =
@@ -30,10 +36,23 @@ export default function SingleGames({ board }: SingleGamesProps) {
       (item: SingleGamesProps["board"]) => item._id !== board._id
     ) || [];
 
+  const handleQuantityChange = (change: number) => {
+    setQuantity((prev) => Math.max(1, prev + change));
+  };
+
+  const handleAddToCart = () => {
+    if (!user?.user?.id) return;
+    addToCart({
+      userId: user.user.id,
+      productId: board._id,
+      quantity,
+    });
+    setQuantity(1);
+  };
   return (
     <div className="min-w-0 w-full">
       <Header />
-      <div className="w-full px-4 sm:px-6">
+      <div className="w-full px-4 py-10 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="transition-all border border-neutral-600 bg-transparent backdrop-blur-md rounded-2xl shadow-2xl p-4 sm:p-8 text-white">
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
@@ -54,15 +73,47 @@ export default function SingleGames({ board }: SingleGamesProps) {
                 </p>
 
                 <div className="mb-6 text-base sm:text-lg text-purple-100 leading-relaxed break-words">
-                  {board.description}
+                  <div
+                    dangerouslySetInnerHTML={{ __html: board.description }}
+                  />
                 </div>
 
                 <div className="text-2xl sm:text-3xl font-bold text-[#fff] mb-6">
                   ${board.price}
                 </div>
-                <button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-md font-semibold transition w-fit">
-                  ADD TO CART
-                </button>
+      
+                {user?.user && (
+                  <>
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="flex items-center bg-gray-700 rounded-md">
+                        <button
+                          onClick={() => handleQuantityChange(-1)}
+                          className="px-3 py-2 text-white hover:bg-gray-600 rounded-l-md transition"
+                          disabled={quantity === 1}
+                        >
+                          -
+                        </button>
+                        <span className="px-4 py-2 text-white bg-gray-800 min-w-[50px] text-center">
+                          {quantity}
+                        </span>
+                        <button
+                          onClick={() => handleQuantityChange(1)}
+                          className="px-3 py-2 text-white hover:bg-gray-600 rounded-r-md transition"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={handleAddToCart}
+                      disabled={isAddingToCart}
+                      className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-md font-semibold transition w-fit disabled:opacity-50"
+                    >
+                      {isAddingToCart ? "ADDING..." : "ADD TO CART"}
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
