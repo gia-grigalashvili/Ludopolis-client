@@ -23,7 +23,12 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api": "http://localhost:5000/",
+      "/api": {
+        target: "https://ludopolis-back.vercel.app",
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
     },
   },
 });
