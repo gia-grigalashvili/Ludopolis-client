@@ -13,7 +13,7 @@ export const useLogout = () => {
       toast.success("Logged out successfully");
       // Clear all cached data after logout
       queryClient.clear();
-      queryClient.invalidateQueries('me');
+      queryClient.invalidateQueries({ queryKey: ['me'] });
       navigate({ to: "/" });
     },
     onError: (error) => {

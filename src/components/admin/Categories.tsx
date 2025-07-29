@@ -26,16 +26,16 @@ export default function Categories() {
     setNewCategory("");
   };
 
-  const handleUpdate = (id: number) => {
+  const handleUpdate = (id: string) => {
     if (!editValue.trim()) return;
-    updateMutation.mutate({ id, name: editValue });
+    updateMutation.mutate({ id: Number(id), name: editValue });
     setEditId(null);
     setEditValue("");
     toast.success("კატეგორია განახლდა");
   };
 
-  const handleDelete = (id: number) => {
-    deleteMutation.mutate(id);
+  const handleDelete = (id: string) => {
+    deleteMutation.mutate(Number(id));
     toast.success("წაიშალა წარმატებით");
   };
 
