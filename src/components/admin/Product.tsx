@@ -26,43 +26,45 @@ export default function ProductForm() {
   const { data: categories, isLoading: loadingCategories } = UseGetCategories();
   const { mutateAsync } = UseCreateBoard();
 
-  const productForm = useForm<FormValues>({
-    defaultValues: {
-      name: "",
-      description: "",
-      price: "",
-      image: "",
-      category: "",
-    },
-    onSubmit: async ({ value }) => {
-      setSubmitAttempted(true);
+  const productForm = useForm<any, any, any, any, any, any, any, any, any, any>(
+    {
+      defaultValues: {
+        name: "",
+        description: "",
+        price: "",
+        image: "",
+        category: "",
+      },
+      onSubmit: async ({ value }) => {
+        setSubmitAttempted(true);
 
-      if (!value.name.trim()) return toast.error("Name is required");
-      if (!value.description.trim())
-        return toast.error("Description is required");
-      if (!value.price.trim() || isNaN(Number(value.price)))
-        return toast.error("Valid price is required");
-      if (!value.image.trim()) return toast.error("Image is required");
-      if (!value.category.trim()) return toast.error("Category is required");
+        if (!value.name.trim()) return toast.error("Name is required");
+        if (!value.description.trim())
+          return toast.error("Description is required");
+        if (!value.price.trim() || isNaN(Number(value.price)))
+          return toast.error("Valid price is required");
+        if (!value.image.trim()) return toast.error("Image is required");
+        if (!value.category.trim()) return toast.error("Category is required");
 
-      try {
-        await mutateAsync({
-          name: value.name,
-          description: stripHtml(value.description),
-          price: Number(value.price),
-          image: value.image,
-          category: value.category,
-        });
+        try {
+          await mutateAsync({
+            name: value.name,
+            description: stripHtml(value.description),
+            price: Number(value.price),
+            image: value.image,
+            category: value.category,
+          });
 
-        toast.success("Product created successfully!");
-        productForm.reset();
-        setImagePreview("");
-        setSubmitAttempted(false);
-      } catch (error) {
-        toast.error("Failed to create product");
-      }
-    },
-  });
+          toast.success("Product created successfully!");
+          productForm.reset();
+          setImagePreview("");
+          setSubmitAttempted(false);
+        } catch (error) {
+          toast.error("Failed to create product");
+        }
+      },
+    }
+  );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
