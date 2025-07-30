@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router"; 
+import { useNavigate } from "@tanstack/react-router";
 
 export default function AboutMission() {
   const navigate = useNavigate();
