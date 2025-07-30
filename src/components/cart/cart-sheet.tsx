@@ -1,4 +1,4 @@
-import { ShoppingCart,  } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -12,14 +12,24 @@ import { useRemoveFromCart } from "@/hooks/useRemoveFromCart";
 import { useGetMe } from "@/hooks/useGetMe";
 import { useNavigate } from "@tanstack/react-router";
 import { CartData } from "./cart-data";
+
 interface CartSheetProps {
   cart?: Cart;
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  onToggle?: () => void;
 }
 
-export function CartSheet({ cart }: CartSheetProps) {
+export function CartSheet({
+  cart,
+  isOpen,
+  onOpenChange,
+  onToggle,
+}: CartSheetProps) {
   const { data: user } = useGetMe();
   const { mutate: updateCart, isPending: isUpdating } = useUpdateCart();
   const { mutate: removeFromCart, isPending: isRemoving } = useRemoveFromCart();
+
   const calculateTotal = () => {
     if (!cart?.items) return 0;
     return cart.items.reduce(
@@ -27,7 +37,9 @@ export function CartSheet({ cart }: CartSheetProps) {
       0
     );
   };
+
   const navigate = useNavigate();
+
   const handleQuantityChange = (productId: string, newQuantity: number) => {
     if (!user?.user?.id || newQuantity < 1) return;
     updateCart({
@@ -46,9 +58,12 @@ export function CartSheet({ cart }: CartSheetProps) {
   };
 
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>
-        <button className="cursor-target hover:text-purple-300 transition-colors relative">
+        <button
+          onClick={onToggle}
+          className="cursor-target hover:text-purple-300 transition-colors relative"
+        >
           <ShoppingCart className="w-6 h-6" />
           {cart?.items && cart.items.length > 0 && (
             <span className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
