@@ -8,9 +8,9 @@
     "build": "vite build && tsc",
     "serve": "vite preview",
     "test": "vitest run"
-    
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-dialog": "^1.1.14",
     "@react-three/fiber": "^9.2.0",
