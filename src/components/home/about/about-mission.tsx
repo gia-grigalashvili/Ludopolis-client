@@ -1,4 +1,8 @@
+import { useNavigate } from "@tanstack/react-router"; 
+
 export default function AboutMission() {
+  const navigate = useNavigate();
+
   return (
     <section className="py-16 px-6">
       <div className="max-w-4xl mx-auto text-center">
@@ -14,7 +18,10 @@ export default function AboutMission() {
             <button className="cursor-target px-8 py-4 bg-purple-600 hover:bg-purple-700 border-2 border-white font-bold text-lg transition-all transform hover:scale-105">
               EXPLORE GAMES
             </button>
-            <button className="cursor-target px-8 py-4 border-2 border-purple-400 hover:bg-purple-400/20 font-bold text-lg transition-all">
+            <button
+              className="cursor-target px-8 py-4 border-2 border-purple-400 hover:bg-purple-400/20 font-bold text-lg transition-all"
+              onClick={() => navigate({ to: "/contactUs" })}
+            >
               CONTACT US
             </button>
           </div>

@@ -16,6 +16,7 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as GamesRouteRouteImport } from './routes/games/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GamesIndexRouteImport } from './routes/games/index'
+import { Route as ContactUsIndexRouteImport } from './routes/contactUs/index'
 import { Route as CheckoutIndexRouteImport } from './routes/checkout/index'
 import { Route as GamesIdRouteImport } from './routes/games/$id'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/Admin/route'
@@ -59,6 +60,11 @@ const GamesIndexRoute = GamesIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => GamesRouteRoute,
+} as any)
+const ContactUsIndexRoute = ContactUsIndexRouteImport.update({
+  id: '/contactUs/',
+  path: '/contactUs/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutIndexRoute = CheckoutIndexRouteImport.update({
   id: '/checkout/',
@@ -117,6 +123,7 @@ export interface FileRoutesByFullPath {
   '/Admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/games/$id': typeof GamesIdRoute
   '/checkout': typeof CheckoutIndexRoute
+  '/contactUs': typeof ContactUsIndexRoute
   '/games/': typeof GamesIndexRoute
   '/Admin/$id': typeof AuthenticatedAdminIdRoute
   '/Admin/All': typeof AuthenticatedAdminAllRoute
@@ -132,6 +139,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/games/$id': typeof GamesIdRoute
   '/checkout': typeof CheckoutIndexRoute
+  '/contactUs': typeof ContactUsIndexRoute
   '/games': typeof GamesIndexRoute
   '/Admin/$id': typeof AuthenticatedAdminIdRoute
   '/Admin/All': typeof AuthenticatedAdminAllRoute
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/_authenticated/Admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/games/$id': typeof GamesIdRoute
   '/checkout/': typeof CheckoutIndexRoute
+  '/contactUs/': typeof ContactUsIndexRoute
   '/games/': typeof GamesIndexRoute
   '/_authenticated/Admin/$id': typeof AuthenticatedAdminIdRoute
   '/_authenticated/Admin/All': typeof AuthenticatedAdminAllRoute
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/Admin'
     | '/games/$id'
     | '/checkout'
+    | '/contactUs'
     | '/games/'
     | '/Admin/$id'
     | '/Admin/All'
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/games/$id'
     | '/checkout'
+    | '/contactUs'
     | '/games'
     | '/Admin/$id'
     | '/Admin/All'
@@ -203,6 +214,7 @@ export interface FileRouteTypes {
     | '/_authenticated/Admin'
     | '/games/$id'
     | '/checkout/'
+    | '/contactUs/'
     | '/games/'
     | '/_authenticated/Admin/$id'
     | '/_authenticated/Admin/All'
@@ -220,6 +232,7 @@ export interface RootRouteChildren {
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
   CheckoutIndexRoute: typeof CheckoutIndexRoute
+  ContactUsIndexRoute: typeof ContactUsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -272,6 +285,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/games/'
       preLoaderRoute: typeof GamesIndexRouteImport
       parentRoute: typeof GamesRouteRoute
+    }
+    '/contactUs/': {
+      id: '/contactUs/'
+      path: '/contactUs'
+      fullPath: '/contactUs'
+      preLoaderRoute: typeof ContactUsIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/checkout/': {
       id: '/checkout/'
@@ -398,6 +418,7 @@ const rootRouteChildren: RootRouteChildren = {
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
   CheckoutIndexRoute: CheckoutIndexRoute,
+  ContactUsIndexRoute: ContactUsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
