@@ -26,14 +26,14 @@ export function CartSheet({
   onOpenChange,
   onToggle,
 }: CartSheetProps) {
-  const { data: user } = useGetMe();
-  const { mutate: updateCart, isPending: isUpdating } = useUpdateCart();
-  const { mutate: removeFromCart, isPending: isRemoving } = useRemoveFromCart();
+  const { data: user, isLoading: isUserLoading } = useGetMe();
+  const { mutate: updateCart, isPending: isUpdating, isError: isUpdateError, error: updateError } = useUpdateCart();
+  const { mutate: removeFromCart, isPending: isRemoving, isError: isRemoveError, error: removeError } = useRemoveFromCart();
 
   const calculateTotal = () => {
     if (!cart?.items) return 0;
     return cart.items.reduce(
-      (total, item) => total + item.productId.price * item.quantity,
+      (total, item) => total + item.productId?.price * item.quantity,
       0
     );
   };
@@ -41,21 +41,24 @@ export function CartSheet({
   const navigate = useNavigate();
 
   const handleQuantityChange = (productId: string, newQuantity: number) => {
-    if (!user?.user?.id || newQuantity < 1) return;
+    if (!user?.id || newQuantity < 1) return;
     updateCart({
-      userId: user.user.id,
+      userId: user.id,
       productId,
       quantity: newQuantity,
     });
   };
 
   const handleRemoveItem = (productId: string) => {
-    if (!user?.user?.id) return;
+    if (!user?.id) return;
     removeFromCart({
-      userId: user.user.id,
+      userId: user.id,
       productId,
     });
   };
+
+ if(isUserLoading || isUpdating || isRemoving) return <div>Loading...</div>
+ if(isUpdateError || isRemoveError) return <div>Error: {updateError?.message || removeError?.message}</div>
 
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
@@ -64,7 +67,7 @@ export function CartSheet({
           onClick={onToggle}
           className="cursor-target hover:text-purple-300 transition-colors relative"
         >
-          <ShoppingCart className="w-6 h-6" />
+          {user?.id && <ShoppingCart className="w-6 h-6" />}
           {cart?.items && cart.items.length > 0 && (
             <span className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
               {cart.items.length}

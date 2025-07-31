@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UseGetCategories } from "@/hooks/UseGetCategories";
 import { IoMdClose } from "react-icons/io";
 import { FiFilter, FiSearch } from "react-icons/fi";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 
 interface FilterProps {
   onFilterChange: (selected: string[]) => void;
@@ -9,9 +10,19 @@ interface FilterProps {
 
 export default function Filter({ onFilterChange }: FilterProps) {
   const { data } = UseGetCategories();
+  const navigate = useNavigate();
+  const search = useSearch({ from: '/games' }) as { categories?: string[] };
+  
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
+  // Initialize selected categories from URL params on component mount
+  useEffect(() => {
+    const urlCategories = search?.categories || [];
+    setSelectedCategories(urlCategories);
+    onFilterChange(urlCategories);
+  }, [search?.categories]);
 
   const toggleCategory = (categoryName: string) => {
     const updated = selectedCategories.includes(categoryName)
@@ -20,11 +31,29 @@ export default function Filter({ onFilterChange }: FilterProps) {
 
     setSelectedCategories(updated);
     onFilterChange(updated);
+    
+    // Update URL parameters
+    navigate({
+      to: '/games',
+      search: {
+        ...search,
+        categories: updated.length > 0 ? updated : undefined
+      }
+    });
   };
 
   const clearAllFilters = () => {
     setSelectedCategories([]);
     onFilterChange([]);
+    
+    // Clear URL parameters
+    navigate({
+      to: '/games',
+      search: {
+        ...search,
+        categories: undefined
+      }
+    });
   };
 
   const filteredCategories = data?.filter((cat: any) =>

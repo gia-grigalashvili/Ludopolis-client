@@ -12,7 +12,6 @@ export const useLogin = () => {
       Login({ email, password }),
     onSuccess: () => {
       toast.success("Logged in successfully");
-      // Invalidate the 'me' query to refresh user data
       queryClient.invalidateQueries({ queryKey: ["me"] });
       navigate({ to: "/" });
     },
