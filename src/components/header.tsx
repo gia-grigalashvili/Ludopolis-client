@@ -14,8 +14,8 @@ export function Header() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { mutate: logout, isPending } = useLogout();
   const { data: me, isLoading } = useGetMe();
-  const { data: cartData, isLoading: isCartLoading } = useGetCart(me?.id);
-console.log(me.user)
+  const { data: cartData, isLoading: isCartLoading } = useGetCart(me.user.id);
+
   const links = [
     { name: "Home", path: "/" },
     { name: "Games", path: "/games" },
@@ -53,6 +53,7 @@ console.log(me.user)
 
   const handleUserClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  
   };
 
   const handleLogout = () => {

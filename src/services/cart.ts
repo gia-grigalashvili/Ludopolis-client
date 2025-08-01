@@ -21,6 +21,7 @@ export const addToCart = async (
 export const getCart = async (userId: string): Promise<Cart> => {
   try {
     const response = await instance.get(`/cart/${userId}`);
+    console.log(response);
     return response.data;
   } catch (error) {
     throw new Error(error as string);

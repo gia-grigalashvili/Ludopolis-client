@@ -13,6 +13,7 @@ import { useGetMe } from "@/hooks/useGetMe";
 import { useNavigate } from "@tanstack/react-router";
 import { CartData } from "./cart-data";
 
+
 interface CartSheetProps {
   cart?: Cart;
   isOpen?: boolean;
@@ -29,6 +30,7 @@ export function CartSheet({
   const { data: user, isLoading: isUserLoading } = useGetMe();
   const { mutate: updateCart, isPending: isUpdating, isError: isUpdateError, error: updateError } = useUpdateCart();
   const { mutate: removeFromCart, isPending: isRemoving, isError: isRemoveError, error: removeError } = useRemoveFromCart();
+
 
   const calculateTotal = () => {
     if (!cart?.items) return 0;
