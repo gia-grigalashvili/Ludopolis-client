@@ -15,7 +15,7 @@ export function Header() {
   const { mutate: logout, isPending } = useLogout();
   const { data: me, isLoading } = useGetMe();
   const { data: cartData, isLoading: isCartLoading } = useGetCart(me?.id);
-
+console.log(me.user)
   const links = [
     { name: "Home", path: "/" },
     { name: "Games", path: "/games" },
@@ -96,7 +96,6 @@ export function Header() {
             ))}
 
             <CartSheet cart={cartData} />
-
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={handleUserClick}
@@ -107,7 +106,7 @@ export function Header() {
 
               {isDropdownOpen && (
                 <div className="absolute right-0 top-full mt-2 w-48 bg-black/90 backdrop-blur-sm border border-purple-500/30 rounded-lg shadow-lg z-50">
-                  {me?.id ? (
+                  {me?.user.id ? (
                     <button
                       onClick={handleLogout}
                       className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-purple-500/20 transition-colors text-purple-100 hover:text-white"
@@ -140,7 +139,7 @@ export function Header() {
 
           {/* Mobile Burger Menu Button */}
           <div className="md:hidden flex items-center space-x-4">
-            {me?.id && <CartSheet cart={cartData} />}
+            {me.user?.id && <CartSheet cart={cartData} />}
             <button
               onClick={toggleMobileMenu}
               className="cursor-target hover:text-purple-300 transition-colors p-1"
@@ -202,7 +201,7 @@ export function Header() {
 
           {/* Mobile User Actions */}
           <div className="border-t border-purple-500/30 pt-6 ">
-            {me?.id ? (
+            {me.user?.id ? (
               <div className="space-y-2">
                 <div className="flex items-center gap-3 px-4 py-2 text-purple-100">
                   <User className="w-4 h-4" />

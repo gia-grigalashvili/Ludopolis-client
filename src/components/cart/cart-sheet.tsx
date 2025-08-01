@@ -41,18 +41,18 @@ export function CartSheet({
   const navigate = useNavigate();
 
   const handleQuantityChange = (productId: string, newQuantity: number) => {
-    if (!user?.id || newQuantity < 1) return;
+    if (!user?.user.id || newQuantity < 1) return;
     updateCart({
-      userId: user.id,
+      userId: user.user.id,
       productId,
       quantity: newQuantity,
     });
   };
 
   const handleRemoveItem = (productId: string) => {
-    if (!user?.id) return;
+    if (!user?.user.id) return;
     removeFromCart({
-      userId: user.id,
+      userId: user.user.id,
       productId,
     });
   };
@@ -67,7 +67,7 @@ export function CartSheet({
           onClick={onToggle}
           className="cursor-target hover:text-purple-300 transition-colors relative"
         >
-          {user?.id && <ShoppingCart className="w-6 h-6" />}
+          {user?.user.id && <ShoppingCart className="w-6 h-6" />}
           {cart?.items && cart.items.length > 0 && (
             <span className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
               {cart.items.length}
