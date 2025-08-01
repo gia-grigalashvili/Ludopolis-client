@@ -38,23 +38,12 @@ export const Login = async ({
     throw new Error(error as string);
   }
 };
-export const getCurrentUser = async (): Promise<{
-  [x: string]: any;
-  id: string;
-  name: string;
-  role: string;
-  email: string;
-}> => {
+export const getCurrentUser = async () => {
   const response = await instance.get("/auth/me");
   if (!response.data.user) {
     throw new Error("User not found");
   }
-  return {
-    id: response.data.user.id,
-    name: response.data.user.name,
-    role: response.data.user.role,
-    email: response.data.user.email,
-  };
+  return response.data.user;
 };
 
 export const logout = async () => {
