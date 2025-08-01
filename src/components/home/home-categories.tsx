@@ -8,7 +8,7 @@ interface Category {
   name: string;
 }
 
-// Array of 4 static icons
+
 const staticIcons = [Gamepad2, Dice1, Users, Trophy];
 
 export function HomeCategories() {

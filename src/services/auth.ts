@@ -39,6 +39,7 @@ export const Login = async ({
   }
 };
 export const getCurrentUser = async (): Promise<{
+  [x: string]: any;
   id: string;
   name: string;
   role: string;
