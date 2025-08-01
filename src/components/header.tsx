@@ -14,7 +14,7 @@ export function Header() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { mutate: logout, isPending } = useLogout();
   const { data: me, isLoading } = useGetMe();
-  const { data: cartData, isLoading: isCartLoading } = useGetCart(me.user.id);
+  const { data: cartData, isLoading: isCartLoading } = useGetCart(me?.user?.id);
 
   const links = [
     { name: "Home", path: "/" },
@@ -140,7 +140,7 @@ export function Header() {
 
           {/* Mobile Burger Menu Button */}
           <div className="md:hidden flex items-center space-x-4">
-            {me.user?.id && <CartSheet cart={cartData} />}
+            {me?.user?.id && <CartSheet cart={cartData} />}
             <button
               onClick={toggleMobileMenu}
               className="cursor-target hover:text-purple-300 transition-colors p-1"
@@ -202,7 +202,7 @@ export function Header() {
 
           {/* Mobile User Actions */}
           <div className="border-t border-purple-500/30 pt-6 ">
-            {me.user?.id ? (
+            {me?.user?.id ? (
               <div className="space-y-2">
                 <div className="flex items-center gap-3 px-4 py-2 text-purple-100">
                   <User className="w-4 h-4" />
