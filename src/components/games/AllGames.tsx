@@ -63,7 +63,7 @@ export default function AllGames({
 
   return (
     <div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-5 lg:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-4 sm:gap-5 lg:gap-6">
         {filteredItems.map((item: any) => (
           <div key={item._id} className="group">
             <div className="bg-[#1f1f31] rounded-2xl backdrop-blur-sm border border-neutral-600 p-4 sm:p-5 hover:border-purple-400 hover:bg-[#383859] transition-all">
