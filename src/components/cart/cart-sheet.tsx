@@ -13,7 +13,6 @@ import { useGetMe } from "@/hooks/useGetMe";
 import { useNavigate } from "@tanstack/react-router";
 import { CartData } from "./cart-data";
 
-
 interface CartSheetProps {
   cart?: Cart;
   isOpen?: boolean;
@@ -30,7 +29,6 @@ export function CartSheet({
   const { data: user, isLoading: isUserLoading } = useGetMe();
   const { mutate: updateCart, isPending: isUpdating, isError: isUpdateError, error: updateError } = useUpdateCart();
   const { mutate: removeFromCart, isPending: isRemoving, isError: isRemoveError, error: removeError } = useRemoveFromCart();
-
 
   const calculateTotal = () => {
     if (!cart?.items) return 0;
@@ -59,8 +57,8 @@ export function CartSheet({
     });
   };
 
- if(isUserLoading || isUpdating || isRemoving) return <div>Loading...</div>
- if(isUpdateError || isRemoveError) return <div>Error: {updateError?.message || removeError?.message}</div>
+  // Only show loading for initial user loading, not for cart operations
+  if (isUserLoading) return <div>Loading user...</div>;
 
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
@@ -84,6 +82,15 @@ export function CartSheet({
             Shopping Cart
           </SheetTitle>
         </SheetHeader>
+
+        {/* Show error messages without breaking the UI */}
+        {(isUpdateError || isRemoveError) && (
+          <div className="mx-4 mt-2 p-3 bg-red-900/20 border border-red-500/50 rounded-lg">
+            <p className="text-red-300 text-sm">
+              {updateError?.message || removeError?.message}
+            </p>
+          </div>
+        )}
 
         <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
           <CartData
@@ -111,9 +118,10 @@ export function CartSheet({
             </div>
             <button
               onClick={() => navigate({ to: "/checkout" })}
-              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-purple-500/25 transform hover:scale-[1.02]"
+              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-purple-500/25 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={isUpdating || isRemoving}
             >
-              Proceed to Checkout
+              {isUpdating || isRemoving ? "Processing..." : "Proceed to Checkout"}
             </button>
           </div>
         )}

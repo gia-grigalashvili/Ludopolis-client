@@ -1,5 +1,6 @@
 import { type Cart } from "@/types/cart";
 import { Minus, Plus, Trash2 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 export function CartData({
   cart,
@@ -14,6 +15,13 @@ export function CartData({
   isUpdating: boolean;
   isRemoving: boolean;
 }) {
+  // Prevent event bubbling to parent elements
+  const handleButtonClick = (e: React.MouseEvent, callback: () => void) => {
+    e.preventDefault();
+    e.stopPropagation();
+    callback();
+  };
+
   return (
     <>
       {cart?.items && cart.items.length > 0 ? (
@@ -23,16 +31,32 @@ export function CartData({
               <div
                 key={item._id}
                 className="flex items-start space-x-3 bg-gray-800/50 rounded-lg p-3 border border-gray-700/50 hover:bg-gray-800/70 transition-colors"
+                // Prevent the entire cart item from triggering parent events
+                onClick={(e) => e.stopPropagation()}
               >
-                <img
-                  src={item.productId.image}
-                  alt={item.productId.name}
-                  className="w-16 h-16 object-cover rounded-lg border-2 border-gray-600 flex-shrink-0"
-                />
+                <Link
+                  to="/games/$id"
+                  params={{ id: item.productId._id }}
+                  className="flex-shrink-0"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <img
+                    src={item.productId.image}
+                    alt={item.productId.name}
+                    className="w-16 h-16 object-cover rounded-lg border-2 border-gray-600 hover:border-purple-500 transition-colors cursor-pointer"
+                  />
+                </Link>
                 <div className="flex-1 min-w-0 space-y-1.5">
-                  <h4 className="text-sm font-semibold text-white line-clamp-2 leading-tight">
-                    {item.productId.name}
-                  </h4>
+                  <Link
+                    to="/games/$id"
+                    params={{ id: item.productId._id }}
+                    className="block"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <h4 className="text-sm font-semibold text-white line-clamp-2 leading-tight hover:text-purple-300 transition-colors cursor-pointer">
+                      {item.productId.name}
+                    </h4>
+                  </Link>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <p className="text-xs text-purple-300 font-medium">
@@ -47,10 +71,12 @@ export function CartData({
                       <div className="flex items-center space-x-2">
                         <div className="flex items-center bg-gray-700 rounded-md">
                           <button
-                            onClick={() =>
-                              handleQuantityChange(
-                                item.productId._id,
-                                item.quantity - 1
+                            onClick={(e) =>
+                              handleButtonClick(e, () =>
+                                handleQuantityChange(
+                                  item.productId._id,
+                                  item.quantity - 1
+                                )
                               )
                             }
                             className="p-1 text-white hover:bg-gray-600 rounded-l-md transition disabled:opacity-50"
@@ -62,10 +88,12 @@ export function CartData({
                             {item.quantity}
                           </span>
                           <button
-                            onClick={() =>
-                              handleQuantityChange(
-                                item.productId._id,
-                                item.quantity + 1
+                            onClick={(e) =>
+                              handleButtonClick(e, () =>
+                                handleQuantityChange(
+                                  item.productId._id,
+                                  item.quantity + 1
+                                )
                               )
                             }
                             className="p-1 text-white hover:bg-gray-600 rounded-r-md transition disabled:opacity-50"
@@ -77,7 +105,11 @@ export function CartData({
                       </div>
 
                       <button
-                        onClick={() => handleRemoveItem(item.productId._id)}
+                        onClick={(e) =>
+                          handleButtonClick(e, () =>
+                            handleRemoveItem(item.productId._id)
+                          )
+                        }
                         className="p-1.5 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-md transition disabled:opacity-50"
                         disabled={isRemoving}
                       >

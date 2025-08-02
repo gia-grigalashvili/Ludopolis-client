@@ -9,7 +9,7 @@ export interface TargetCursorProps {
 
 const TargetCursor: React.FC<TargetCursorProps> = ({
   targetSelector = ".cursor-target",
-  spinDuration = 2,
+  spinDuration = 1.5, // Faster spin
   hideDefaultCursor = true,
 }) => {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -25,18 +25,29 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
     []
   );
 
+  // Check if device is mobile/touch device
+  const isMobile = useMemo(() => {
+    return (
+      typeof window !== 'undefined' && 
+      ('ontouchstart' in window || 
+       navigator.maxTouchPoints > 0 || 
+       window.innerWidth <= 768)
+    );
+  }, []);
+
   const moveCursor = useCallback((x: number, y: number) => {
-    if (!cursorRef.current) return;
+    if (!cursorRef.current || isMobile) return;
     gsap.to(cursorRef.current, {
       x,
       y,
-      duration: 0.1,
-      ease: "power3.out",
+      duration: 0.05, // Faster movement (was 0.1)
+      ease: "power2.out", // Snappier easing
     });
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
-    if (!cursorRef.current) return;
+    // Don't initialize cursor on mobile devices
+    if (isMobile || !cursorRef.current) return;
 
     const originalCursor = document.body.style.cursor;
     if (hideDefaultCursor) {
@@ -173,7 +184,7 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
             {
               x: offsets[index].x,
               y: offsets[index].y,
-              duration: 0.2,
+              duration: 0.15, // Faster corner animation (was 0.2)
               ease: "power2.out",
             },
             0
@@ -221,7 +232,7 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
               {
                 x: positions[index].x,
                 y: positions[index].y,
-                duration: 0.3,
+                duration: 0.2, // Faster corner reset (was 0.3)
                 ease: "power3.out",
               },
               0
@@ -252,7 +263,7 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
             });
           }
           resumeTimeout = null;
-        }, 50);
+        }, 30); // Faster resume timeout (was 50)
 
         cleanupTarget(target);
       };
@@ -277,10 +288,10 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
       spinTl.current?.kill();
       document.body.style.cursor = originalCursor;
     };
-  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor]);
+  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor, isMobile]);
 
   useEffect(() => {
-    if (!cursorRef.current || !spinTl.current) return;
+    if (!cursorRef.current || !spinTl.current || isMobile) return;
     
     if (spinTl.current.isActive()) {
       spinTl.current.kill();
@@ -288,12 +299,17 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
         .timeline({ repeat: -1 })
         .to(cursorRef.current, { rotation: "+=360", duration: spinDuration, ease: "none" });
     }
-  }, [spinDuration]);
+  }, [spinDuration, isMobile]);
+
+  // Don't render cursor on mobile devices
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <div 
       ref={cursorRef} 
-      className="fixed top-0 left-0 w-0 h-0 pointer-events-none z-[9999] mix-blend-difference transform -translate-x-1/2 -translate-y-1/2"
+      className="fixed top-0 left-0 w-0 h-0 pointer-events-none z-[9999] mix-blend-difference transform -translate-x-1/2 -translate-y-1/2 hidden md:block"
       style={{ willChange: 'transform' }}
     >
       <div 

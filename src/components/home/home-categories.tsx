@@ -53,7 +53,7 @@ export function HomeCategories() {
               <Link
                 key={`${category.id}-${index}`}
                 to={`/games`}
-                search={{ categories: [category.name] }} // Pass the clicked category as an array
+                search={{ categories: [category.name] }} 
                 className="group cursor-pointer cursor-target"
               >
                 <div className="bg-black/30 backdrop-blur-sm border-2 border-purple-500/50 p-6 text-center transition-all hover:border-purple-400 hover:bg-purple-600/20">
